@@ -1,4 +1,4 @@
-package ui;
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +10,16 @@ public class Main extends Application{
 
 	private static Stage primStage;
 	
+	public static void main(String[] args) {
+		launch(args);
+
+	}
+	
 	@Override
 	public void start(Stage primStage) throws Exception {
 		this.primStage = primStage;
 		try {
-			AnchorPane root = FXMLLoader.load(getClass().getResource("/controller/menu.fxml"));
+			AnchorPane root = FXMLLoader.load(getClass().getResource("menu.fxml"));
 			Scene scene = new Scene(root);
 			primStage.setTitle("MCD Data Generator");
 			primStage.setScene(scene);
@@ -32,9 +37,5 @@ public class Main extends Application{
 		Main.primStage = primStage;
 	}	
 
-	public static void main(String[] args) {
-		launch(args);
-
-	}
 	
 }

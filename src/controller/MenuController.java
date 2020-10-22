@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import ui.Main;
 
 public class MenuController implements Initializable{
 	
@@ -24,7 +24,7 @@ public class MenuController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		main = new Main();
-		
+		stageEscoger = new Stage();
 	}
 	
 	public static Main getMain() {
@@ -49,7 +49,7 @@ public class MenuController implements Initializable{
 
 	@FXML
 	void generationDataGo(ActionEvent event) throws Exception {
-		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/controller/generationData.fxml"));
+		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/application/generationData.fxml"));
 		Scene scene = new Scene(escoger);
 		main.getPrimStage().close();
 		stageEscoger.setScene(scene);
@@ -58,7 +58,7 @@ public class MenuController implements Initializable{
 
 	@FXML
 	void searchDataGo(ActionEvent event) throws Exception {
-		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/controller/searchData.fxml"));
+		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/application/searchData.fxml"));
 		Scene scene = new Scene(escoger);
 		main.getPrimStage().close();
 		stageEscoger.setScene(scene);
@@ -67,7 +67,7 @@ public class MenuController implements Initializable{
 
 	@FXML
 	void updataDeleteGo(ActionEvent event) throws Exception{
-		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/controller/updateOrDelete.fxml"));
+		AnchorPane escoger = FXMLLoader.load(getClass().getResource("/application/updateOrDelete.fxml"));
 		Scene scene = new Scene(escoger);
 		main.getPrimStage().close();
 		stageEscoger.setScene(scene);
