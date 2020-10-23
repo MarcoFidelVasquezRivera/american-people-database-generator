@@ -5,9 +5,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <children>
@@ -15,21 +14,21 @@
         <menus>
           <Menu mnemonicParsing="false" text="Menu">
             <items>
-              <MenuItem mnemonicParsing="false" text="Generate Data" />
-                  <MenuItem mnemonicParsing="false" text="Search the Data" />
-                  <MenuItem mnemonicParsing="false" text="Udtape and Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#generationDataGo" text="Generate Data" />
+                  <MenuItem mnemonicParsing="false" onAction="#searchDataGo" text="Search the Data" />
+                  <MenuItem mnemonicParsing="false" onAction="#updataDeleteGo" text="Update or Delete" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorMain" prefHeight="390.0" prefWidth="600.0">
-         <children>
-            <ImageView fitHeight="325.0" fitWidth="330.0" layoutX="138.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <BorderPane fx:id="bordeMain" prefHeight="375.0" prefWidth="600.0">
+         <center>
+            <ImageView fitHeight="327.0" fitWidth="366.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@depositphotos_68241539-stock-illustration-americas-map-vector-black-icon.jpg" />
+                  <Image url="@../../data/continente.jpg" />
                </image>
             </ImageView>
-         </children>
-      </AnchorPane>
+         </center>
+      </BorderPane>
    </children>
 </VBox>

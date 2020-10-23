@@ -46,13 +46,13 @@ public class MenuController implements Initializable {
 		this.stageEscoger = stageEscoger;
 	}
 
-	@FXML
+	@FXML 
 	void generationDataGo(ActionEvent event) throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/generationData.fxml"));
-		fxmlLoader.setController(this);
-		VBox resultsPane = fxmlLoader.load();
-		borderMain.getChildren().clear();
-		borderMain.setCenter(resultsPane);
+		Parent root = FXMLLoader.load(getClass().getResource("/application/generationData.fxml"));
+		Scene  scene = new Scene(root);
+		this.getStageEscoger().setScene(scene);
+		this.getStageEscoger().setTitle("Data Generation");
+		this.getStageEscoger().show();
 	}
 
 	@FXML

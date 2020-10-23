@@ -5,7 +5,10 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -46,6 +49,9 @@ public class SearchDataController implements Initializable{
     
     @FXML
     void returnMain(ActionEvent event) throws Exception {
+    	Parent root = FXMLLoader.load(getClass().getResource("/application/menu.fxml"));
+		Scene  scene = new Scene(root);
+//		this.getsearchData().setScene(scene);
     	searchData.close();
 		mc.getMain().start(mc.getStageEscoger());
     }
