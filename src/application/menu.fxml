@@ -16,7 +16,6 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#generationDataGo" text="Generate Data" />
                   <MenuItem mnemonicParsing="false" onAction="#searchDataGo" text="Search the Data" />
-                  <MenuItem mnemonicParsing="false" onAction="#updataDeleteGo" text="Update or Delete" />
             </items>
           </Menu>
         </menus>

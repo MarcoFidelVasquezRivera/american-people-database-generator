@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UpdateOrDeleteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="38.0" layoutY="19.0" text="Code">
          <font>
@@ -51,33 +50,33 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="name" layoutX="133.0" layoutY="53.0" />
-      <TextField fx:id="lastName" layoutX="133.0" layoutY="93.0" />
-      <TextField fx:id="gender" layoutX="133.0" layoutY="132.0" />
-      <TextField fx:id="dataBirth" layoutX="133.0" layoutY="169.0" />
-      <TextField fx:id="height" layoutX="133.0" layoutY="205.0" />
-      <TextField fx:id="nationality" layoutX="133.0" layoutY="249.0" />
+      <TextField layoutX="133.0" layoutY="53.0" />
+      <TextField layoutX="133.0" layoutY="93.0" />
+      <TextField layoutX="133.0" layoutY="132.0" />
+      <TextField layoutX="133.0" layoutY="169.0" />
+      <TextField layoutX="133.0" layoutY="205.0" />
+      <TextField layoutX="133.0" layoutY="249.0" />
       <ImageView fitHeight="245.0" fitWidth="258.0" layoutX="133.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../data/el-pepe.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="419.0" layoutY="66.0" mnemonicParsing="false" onAction="#updateData" text="Update">
+      <Button layoutX="419.0" layoutY="66.0" mnemonicParsing="false" text="Update">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="428.0" layoutY="263.0" mnemonicParsing="false" onAction="#menuMainBack" text="Menu">
+      <Button layoutX="428.0" layoutY="263.0" mnemonicParsing="false" text="Menu">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="422.0" layoutY="158.0" mnemonicParsing="false" onAction="#deleteData" text="Delete">
+      <Button layoutX="422.0" layoutY="158.0" mnemonicParsing="false" text="Delete">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="code" layoutX="133.0" layoutY="21.0" text="#" />
-      <TextField fx:id="photo" layoutX="133.0" layoutY="302.0" promptText="image path " />
+      <Label layoutX="133.0" layoutY="21.0" text="#" />
+      <TextField layoutX="133.0" layoutY="302.0" promptText="image path " />
    </children>
 </AnchorPane>

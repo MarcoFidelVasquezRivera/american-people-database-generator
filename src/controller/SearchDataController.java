@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -57,9 +58,21 @@ public class SearchDataController implements Initializable{
     }
     
     @FXML
-    void searchDataBase(ActionEvent event) {
-
+    void searchDataBase(ActionEvent event) throws Exception {
+    	Parent root = FXMLLoader.load(getClass().getResource("/application/updateOrDelete.fxml"));
+		Scene  scene = new Scene(root);
+		this.getSearchData().setScene(scene);
+		this.getSearchData().setTitle("Data Search");
+		this.getSearchData().show();
     }
+
+	public Stage getSearchData() {
+		return searchData;
+	}
+
+	public void setSearchData(Stage searchData) {
+		this.searchData = searchData;
+	}
 
 
     

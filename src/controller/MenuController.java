@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -57,20 +55,11 @@ public class MenuController implements Initializable {
 
 	@FXML
 	void searchDataGo(ActionEvent event) throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/searchData.fxml"));
-		fxmlLoader.setController(this);
-		VBox resultsPane = fxmlLoader.load();
-		borderMain.getChildren().clear();
-		borderMain.setCenter(resultsPane);
-	}
-
-	@FXML
-	void updataDeleteGo(ActionEvent event) throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/updateOrDelete.fxml"));
-		fxmlLoader.setController(this);
-		VBox resultsPane = fxmlLoader.load();
-		borderMain.getChildren().clear();
-		borderMain.setCenter(resultsPane);
+		Parent root = FXMLLoader.load(getClass().getResource("/application/searchDate.fxml"));
+		Scene  scene = new Scene(root);
+		this.getStageEscoger().setScene(scene);
+		this.getStageEscoger().setTitle("Data Search");
+		this.getStageEscoger().show();
 	}
 
 }
