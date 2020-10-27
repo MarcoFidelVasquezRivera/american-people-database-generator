@@ -27,6 +27,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}else {
 			insert(newNode, root);
 		}
+		updateHeight(newNode);
 	}
 	
 	private void insert(Node<K,E> toAdd,Node<K,E> current) {
@@ -100,16 +101,19 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 			Node <K,E> p=root.getParent();
 			p.setLeft(aux);
 			aux.setParent(p);
+			updateHeight(p);
 			return true;
 		}else if(root.getRight()!=null) {
 			Node <K,E>aux=root.getRight();
 			Node <K,E> p=root.getParent();
 			p.setRight(aux);;
 			aux.setParent(p);
+			updateHeight(p);
 			return true;
 		}
 		return false;
 	}
+	//revisar el caso de actuelizar el peso en este metodo
 	public boolean deleteTreeTwoSons(Node<K,E> root) {
 		Node<K,E> minRightValue = minimunValue(root.getRight());
 		if(minRightValue.getRight()!=null) {
@@ -168,7 +172,9 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	}
 	
 	public boolean deleteTreeNoSons(Node<K,E> node) {
+		Node<K,E> parent = node.getParent();
 		node = null;
+		updateHeight(parent);
 		return true;
 	}
 	
@@ -179,9 +185,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		if(root == null) {
 			return 0;
 		}else {
-			int rightHeight = height(root.getRight());
-			int leftHeight = height(root.getLeft());
-			return Math.max(rightHeight, leftHeight);
+			return root.getHeight();
 		}
 	}
 	
@@ -190,26 +194,28 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		if(currentNode == null) {
 			return 0;
 		}else {
-			int rightHeight = height(currentNode.getRight());
-			int leftHeight = height(currentNode.getLeft());
-			return Math.max(rightHeight, leftHeight);
+			return currentNode.getHeight();
 		}
 	}
-	//cambiarlo porque me está tirando uno de más
-	private int heightR(Node<K,E> currentNode) {
-		if(currentNode==null) {
-			return 0;
-		}
-		if(currentNode.getLeft()==null && currentNode.getRight()==null) {
-			return 1;
-		}else {
-			int left = heightR(currentNode.getLeft());
-			int right = heightR(currentNode.getLeft());
+	
+	@Override
+	public void updateHeight(Node<K,E> currentNode) {
+		if(currentNode!=null) {
+			int leftHeight = 0;
+			int rightHeight = 0;
 			
-			return 1+Math.max(left,right);
+			if(currentNode.getRight()!=null) {
+				rightHeight = currentNode.getRight().getHeight();
+			}
+			if(currentNode.getLeft()!=null) {
+				leftHeight = currentNode.getLeft().getHeight();
+			}
+			int currentHeight = Math.max(leftHeight, rightHeight);
+			currentNode.setHeight(currentHeight);
+			updateHeight(currentNode.getParent());
 		}
 	}
-
+	
 	@Override
 	public int weight() {
 		return this.weight;

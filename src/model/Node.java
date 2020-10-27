@@ -7,10 +7,20 @@ public class Node<K extends Comparable<K>, E>{
 	private Node<K,E> parent;
 	private Node<K,E> left;
 	private Node<K,E> right;
-	
+	private int height;
+
 	public Node(K key, E element) {
 		this.element = element;
 		this.key = key;
+		this.height = 0;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int hight) {
+		this.height = hight;
 	}
 
 	public E getElement() {
