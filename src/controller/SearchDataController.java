@@ -49,15 +49,6 @@ public class SearchDataController implements Initializable{
 	}
     
     @FXML
-    void returnMain(ActionEvent event) throws Exception {
-    	Parent root = FXMLLoader.load(getClass().getResource("/application/menu.fxml"));
-		Scene  scene = new Scene(root);
-//		this.getsearchData().setScene(scene);
-    	searchData.close();
-		mc.getMain().start(mc.getStageEscoger());
-    }
-    
-    @FXML
     void searchDataBase(ActionEvent event) throws Exception {
     	Parent root = FXMLLoader.load(getClass().getResource("/application/updateOrDelete.fxml"));
 		Scene  scene = new Scene(root);

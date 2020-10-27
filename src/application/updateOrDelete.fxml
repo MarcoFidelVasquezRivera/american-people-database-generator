@@ -66,11 +66,6 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="428.0" layoutY="263.0" mnemonicParsing="false" text="Menu">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <Button layoutX="422.0" layoutY="158.0" mnemonicParsing="false" text="Delete">
          <font>
             <Font size="14.0" />
