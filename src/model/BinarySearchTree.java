@@ -49,12 +49,12 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	}
 	
 	//Delete method
-	public Node<K,E> minimunValue(Node<K,E> node) {
+	public Node<K,E> minimumValue(Node<K,E> node) {
 		if(node!=null) {
 			if(node.getLeft()==null) {
 				return node;
 			}else {
-					return minimunValue(node.getLeft());		
+					return minimumValue(node.getLeft());		
 			}
 		}
 		return null;
@@ -115,7 +115,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	}
 	//revisar el caso de actuelizar el peso en este metodo
 	public boolean deleteTreeTwoSons(Node<K,E> root) {
-		Node<K,E> minRightValue = minimunValue(root.getRight());
+		Node<K,E> minRightValue = minimumValue(root.getRight());
 		if(minRightValue.getRight()!=null) {
 			Node<K,E> temp =minRightValue;
 			deleteTreeOneSon(minRightValue);
