@@ -1,5 +1,4 @@
-/controller/
-/application/
-/tests/
-/ui/
 /model/
+/tests/
+/controller/
+/ui/

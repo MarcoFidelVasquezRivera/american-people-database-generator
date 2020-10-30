@@ -76,19 +76,16 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}
 		
 		if(current.getKey().compareTo(value)<0) {
-				return deleteValue(current.getRight(), value);
+			return deleteValue(current.getRight(),value);
 				
 		}else if(current.getKey().compareTo(value)>0) {
-				return deleteValue(current.getLeft(),value);
+			return deleteValue(current.getLeft(),value);
 				
 		}else {
 			if(current.getLeft() != null && current.getRight() != null) {
 				return deleteTreeTwoSons(current);	
 				
-			}else if(current.getLeft()!=null && current.getRight() == null) {
-				return deleteTreeOneSon(current);
-				
-			}else if(current.getRight()!=null && current.getLeft() == null) {
+			}else if(current.getLeft()!=null || current.getRight()!=null) {
 				return deleteTreeOneSon(current);
 				
 			}else {
@@ -99,7 +96,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	
 	private boolean deleteTreeNoSons(Node<K,E> node) {
 		Node<K,E> parent = node.getParent();
-		if(parent.getLeft() != null) {
+		if(parent.getLeft() == node) {
 			parent.setLeft(null);
 		}else {
 			parent.setRight(null);
@@ -113,7 +110,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		if(current.getLeft()!=null) {
 			
 			Node<K,E> parent = current.getParent();
-			if(parent.getLeft().equals(current)) {
+			if(parent.getLeft()==(current)) {
 				Node <K,E> aux = current.getLeft();
 				parent.setLeft(aux);
 				aux.setParent(parent);
@@ -130,7 +127,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}else if(current.getRight()!=null) {
 			
 			Node<K,E> parent = current.getParent();
-			if(parent.getLeft().equals(current)) {
+			if(parent.getLeft()==(current)) {
 				Node <K,E> aux = current.getRight();
 				parent.setLeft(aux);
 				aux.setParent(parent);
@@ -186,8 +183,15 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 			if(current==this.root) {
 				temp.setRight(current.getRight());
 				temp.setLeft(current.getLeft());
-				current.getLeft().setParent(temp);
-				current.getRight().setParent(temp);
+				
+				if(current.getLeft()!=null) {
+					current.getLeft().setParent(temp);
+				}
+				
+				if(current.getRight()!=null) {
+					current.getRight().setParent(temp);
+				}
+				
 				this.root=temp;
 				return true;
 			}else {
@@ -199,8 +203,16 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				}else if(pop.getRight()==current) {
 					pop.setRight(temp);
 				}
-				current.getLeft().setParent(temp);
-				current.getRight().setParent(temp);
+				
+				if(current.getLeft()!=null) {
+					current.getLeft().setParent(temp);
+				}
+				
+				if(current.getRight()!=null) {
+					current.getRight().setParent(temp);
+				}
+				
+				current.setParent(null);
 				current=temp;
 				return true;
 			}
@@ -283,11 +295,13 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	
 	private void inOrderR(Node<K,E> current, ArrayList<E> list) {
 		
-		if(current.getLeft()==null) {
-			list.add(current.getElement());
-		}else {
+		if(current.getLeft()!=null) {
 			inOrderR(current.getLeft(),list);
+			
 		}
+		
+		list.add(current.getElement());
+		
 		if(current.getRight()!=null) {
 			inOrderR(current.getRight(),list);
 		}

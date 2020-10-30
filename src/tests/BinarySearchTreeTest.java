@@ -2,10 +2,13 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import model.BinarySearchTree;
 import model.Node;
+import sun.swing.plaf.synth.DefaultSynthStyle;
 
 class BinarySearchTreeTest {
 
@@ -80,18 +83,19 @@ class BinarySearchTreeTest {
 	@Test
 	public void deleteTest() {
 		setup1();
+
 		assertFalse(tree.deleteValue(0), "Tree is deleting a value it should not delete");
-		
+
 		assertTrue(tree.deleteValue(11), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(11));
-		
+
 		assertTrue(tree.deleteValue(42), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(42));
 		
 		//TODO Fix this
 		assertTrue(tree.deleteValue(-23), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(-23));
-		
+
 		assertTrue(tree.deleteValue(1), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(1));
 	}
