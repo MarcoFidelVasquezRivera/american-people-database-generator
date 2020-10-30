@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import ui.Main;
 
 public class MenuController implements Initializable {
 
@@ -46,7 +46,7 @@ public class MenuController implements Initializable {
 
 	@FXML 
 	void generationDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/generationData.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/ui/generationData.fxml"));
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Generation");
@@ -55,7 +55,7 @@ public class MenuController implements Initializable {
 
 	@FXML
 	void searchDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/searchDate.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/ui/searchDate.fxml"));
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Search");
