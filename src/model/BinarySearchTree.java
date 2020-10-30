@@ -27,7 +27,8 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}else {
 			insert(newNode, root);
 		}
-		updateHeight(newNode);
+		//TODO		
+		//updateHeight(newNode);
 	}
 	
 	private void insert(Node<K,E> toAdd,Node<K,E> current) {
@@ -69,114 +70,144 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}
 	}
 	
-	private boolean deleteValue(Node<K,E> root,K value) {
-		if(root==null) {
+	private boolean deleteValue(Node<K,E> current,K value) {
+		if(current==null) {
 			return false;
 		}
-		if(root.getKey().compareTo(value)<0) {
-				return deleteValue(root.getRight(), value);
+		
+		if(current.getKey().compareTo(value)<0) {
+				return deleteValue(current.getRight(), value);
 				
-		}else if(root.getKey().compareTo(value)>0) {
-				return deleteValue(root.getLeft(),value);
+		}else if(current.getKey().compareTo(value)>0) {
+				return deleteValue(current.getLeft(),value);
 				
 		}else {
-			if(root.getLeft()!=null && root.getRight()!=null) {
-				return deleteTreeTwoSons(root);	
+			if(current.getLeft() != null && current.getRight() != null) {
+				return deleteTreeTwoSons(current);	
 				
-			}else if(root.getLeft()!=null) {
-				return deleteTreeOneSon(root);
+			}else if(current.getLeft()!=null && current.getRight() == null) {
+				return deleteTreeOneSon(current);
 				
-			}else if(root.getRight()!=null) {
-				return deleteTreeOneSon(root);
+			}else if(current.getRight()!=null && current.getLeft() == null) {
+				return deleteTreeOneSon(current);
 				
 			}else {
-				return deleteTreeNoSons(root);
+				return deleteTreeNoSons(current);
 			}
 		}	
 	}
 	
-	public boolean deleteTreeOneSon(Node<K,E> root) {
-		if(root.getLeft()!=null) {
-			Node <K,E>aux=root.getLeft();
-			Node <K,E> p=root.getParent();
-			p.setLeft(aux);
-			aux.setParent(p);
-			updateHeight(p);
-			return true;
-		}else if(root.getRight()!=null) {
-			Node <K,E>aux=root.getRight();
-			Node <K,E> p=root.getParent();
-			p.setRight(aux);;
-			aux.setParent(p);
-			updateHeight(p);
-			return true;
+	private boolean deleteTreeNoSons(Node<K,E> node) {
+		Node<K,E> parent = node.getParent();
+		if(parent.getLeft() != null) {
+			parent.setLeft(null);
+		}else {
+			parent.setRight(null);
+		}
+		//TODO	
+		//updateHeight(parent);
+		return true;
+	}
+
+	private boolean deleteTreeOneSon(Node<K,E> current) {
+		if(current.getLeft()!=null) {
+			
+			Node<K,E> parent = current.getParent();
+			if(parent.getLeft().equals(current)) {
+				Node <K,E> aux = current.getLeft();
+				parent.setLeft(aux);
+				aux.setParent(parent);
+				return true;
+			}else {
+				Node <K,E> aux = current.getLeft();
+				parent.setRight(aux);
+				aux.setParent(parent);	
+				return true;
+			}
+			//TODO	
+			//updateHeight(p);
+			
+		}else if(current.getRight()!=null) {
+			
+			Node<K,E> parent = current.getParent();
+			if(parent.getLeft().equals(current)) {
+				Node <K,E> aux = current.getRight();
+				parent.setLeft(aux);
+				aux.setParent(parent);
+				return true;
+			}else {
+				Node <K,E> aux = current.getRight();
+				parent.setRight(aux);
+				aux.setParent(parent);	
+				return true;
+			}
+			
+			//TODO	
+			//updateHeight(p);
+			
 		}
 		return false;
 	}
-	//revisar el caso de actuelizar el peso en este metodo
-	public boolean deleteTreeTwoSons(Node<K,E> root) {
-		Node<K,E> minRightValue = minimumValue(root.getRight());
+	
+	//Revisar el caso de actuelizar el peso en este metodo
+	private boolean deleteTreeTwoSons(Node<K,E> current) {
+		Node<K,E> minRightValue = minimumValue(current.getRight());
 		if(minRightValue.getRight()!=null) {
 			Node<K,E> temp =minRightValue;
 			deleteTreeOneSon(minRightValue);
-			if(root==this.root) {
-				temp.setRight(root.getRight());
-				temp.setLeft(root.getLeft());
-				root.getLeft().setParent(temp);
-				root.getRight().setParent(temp);
+			if(current==this.root) {
+				temp.setRight(current.getRight());
+				temp.setLeft(current.getLeft());
+				current.getLeft().setParent(temp);
+				current.getRight().setParent(temp);
 				this.root=temp;
 				return true;
 			}else {
-				temp.setRight(root.getRight());
-				temp.setLeft(root.getLeft());
-				Node<K,E> pop = root.getParent();
-				if(pop.getLeft()==root) {
+				temp.setRight(current.getRight());
+				temp.setLeft(current.getLeft());
+				Node<K,E> pop = current.getParent();
+				if(pop.getLeft()==current) {
 					pop.setLeft(temp);
-				}else if(pop.getRight()==root) {
+				}else if(pop.getRight()==current) {
 					pop.setRight(temp);
 				}
-				if(root.getLeft()!=null ) {
-					root.getLeft().setParent(temp);
+				if(current.getLeft()!=null ) {
+					current.getLeft().setParent(temp);
 				}
-				if(root.getRight()!=null) {
-					root.getRight().setParent(temp);
+				if(current.getRight()!=null) {
+					current.getRight().setParent(temp);
 				}
-				root=temp;
+				current=temp;
 				return true;
 			}
 		}else {
 			Node<K,E> temp =minRightValue;
 			deleteTreeNoSons(minRightValue);
-			if(root==this.root) {
-				temp.setRight(root.getRight());
-				temp.setLeft(root.getLeft());
-				root.getLeft().setParent(temp);
-				root.getRight().setParent(temp);
+			if(current==this.root) {
+				temp.setRight(current.getRight());
+				temp.setLeft(current.getLeft());
+				current.getLeft().setParent(temp);
+				current.getRight().setParent(temp);
 				this.root=temp;
 				return true;
 			}else {
-				temp.setRight(root.getRight());
-				temp.setLeft(root.getLeft());
-				Node<K,E> pop = root.getParent();
-				if(pop.getLeft()==root) {
+				temp.setRight(current.getRight());
+				temp.setLeft(current.getLeft());
+				Node<K,E> pop = current.getParent();
+				if(pop.getLeft()==current) {
 					pop.setLeft(temp);
-				}else if(pop.getRight()==root) {
+				}else if(pop.getRight()==current) {
 					pop.setRight(temp);
 				}
-				root.getLeft().setParent(temp);
-				root.getRight().setParent(temp);
-				root=temp;
+				current.getLeft().setParent(temp);
+				current.getRight().setParent(temp);
+				current=temp;
 				return true;
 			}
 		}
 	}
 	
-	public boolean deleteTreeNoSons(Node<K,E> node) {
-		Node<K,E> parent = node.getParent();
-		node = null;
-		updateHeight(parent);
-		return true;
-	}
+	
 	
 	//Delete end
 	
