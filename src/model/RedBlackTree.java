@@ -8,12 +8,11 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	
 	public RedBlackTree() {
 		super();
-		this.root = null;
 	}
-    
+	
 	public RBTNode<K,E> insert(RBTNode<K,E> root, RBTNode<K,E> node) {
 		insertRecurse(root, node);
-		
+
 		//Repair tree if cases are violated
 		insertRepairTree(node);
 		
@@ -28,8 +27,11 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	
 
 	
-	private void insertRecurse(RBTNode<K, E> current, RBTNode<K, E> toAdd) {
-		if(root != null) {
+	private void insertRecurse(RBTNode<K, E> current, RBTNode<K, E> toAdd) {	
+		if(current == null) {
+			root = toAdd;
+		}
+		else if(current != null) {
 			if(toAdd.getKey().compareTo(current.getKey()) < 0) {
 				if(current.getLeft() != null) {
 					insertRecurse(current.getLeft(), toAdd);
@@ -37,22 +39,23 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 				}else {
 					current.setLeft(toAdd);
 				}
-				
-			}else {// node.key >= root.key
+
+			}else {// node.key >= root.key			
 				if(current.getRight() != null) {
 					insertRecurse(current.getRight(), toAdd);
+					return;
 				}else {
 					current.setRight(toAdd);
 				}
 			}
 			
-		}
-		
+
+		}		
 		toAdd.setParent(current);
 		toAdd.setLeft(null);
 		toAdd.setRight(null);
 		toAdd.setColor(RED);
-		
+
 	}
 	
 	private void insertRepairTree(RBTNode<K,E> node){
@@ -94,10 +97,10 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		RBTNode<K,E> grandParent = getGrandParent(node);
 		
 		if(node == parent.getRight() && parent == grandParent.getLeft()) {
-			rotateLeft(parent);
+			leftRotate(parent);
 			node = node.getLeft();
 		}else if(node == parent.getLeft() && parent == grandParent.getRight()){
-			rotateRight(parent);
+			rightRotate(parent);
 			node = node.getRight();
 		}
 		
@@ -109,9 +112,9 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		RBTNode<K,E> grandParent = getGrandParent(node);
 		
 		if(node == parent.getLeft()) {
-			rotateRight(grandParent);
+			rightRotate(grandParent);
 		}else {
-			rotateLeft(grandParent);
+			leftRotate(grandParent);
 		}
 		
 		parent.setColor(BLACK);
@@ -144,57 +147,44 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		return getSibling(parent);
 	}
 	
-	public void rotateLeft(RBTNode<K,E> node) {
-		RBTNode<K,E> nnew = node.getLeft();
-		RBTNode<K,E> parent = node.getParent();
-		
-		assert(nnew != null);
-		
-		node.setRight(nnew.getLeft());
-		nnew.setLeft(node);	
-		node.setParent(nnew);
-		
-		if(node.getRight() != null) {
-			node.getRight().setParent(node);
-		}
-		
-		
-		if(parent != null) {
-			if(node == parent.getLeft()) {
-				parent.setLeft(nnew);
-			}
-			else if(node == parent.getRight()) {
-				parent.setRight(nnew);
-			}
-		}
-		
-		nnew.setParent(parent);
-	}
+	public void leftRotate(RBTNode<K,E> x) {
+		RBTNode<K,E> y = x.getRight();
+	    x.setRight(y.getLeft());
+	    if(y.getLeft() != null) {
+	      y.getLeft().setParent(x);
+	    }
+	    y.setParent(x.getParent());
+	    if(x.getParent() == null) { //x is root
+	      this.root = y;
+	    }
+	    else if(x == x.getParent().getLeft()) { //x is left child
+	      x.getParent().setLeft(y);
+	    }
+	    else { //x is right child
+	      x.getParent().setRight(y);
+	    }
+	    y.setLeft(x);
+	    x.setParent(y);
+	  }
 	
-	public void rotateRight(RBTNode<K,E> node) {
-		RBTNode<K,E> nnew = node.getLeft();
-		RBTNode<K,E> parent = node.getParent();
-		
-		assert(nnew != null);
-		
-		node.setLeft(nnew.getRight());
-		nnew.setRight(node);	
-		node.setParent(nnew);
-		
-		if(node.getRight() != null) {
-			node.getLeft().setParent(node);
-		}
-		
-		
-		if(parent != null) {
-			if(node == parent.getLeft()) {
-				parent.setLeft(nnew);
-			}
-			else if(node == parent.getRight()) {
-				parent.setRight(nnew);
-			}
-		}
-		
-		nnew.setParent(parent);
-	}
+	  public void rightRotate(RBTNode<K,E> x) {
+		  RBTNode<K,E> y = x.getLeft();
+		    x.setLeft(y.getRight());
+		    if(y.getRight() != null) {
+		      y.getRight().setParent(x);
+		    }
+		    y.setParent(x.getParent());
+		    if(x.getParent() == null) { //x is root
+		      this.root = y;
+		    }
+		    else if(x == x.getParent().getRight()) { //x is left child
+		    	x.getParent().setRight(y);
+		    }
+		    else { //x is right child
+		      x.getParent().setLeft(y);
+		    }
+		    y.setRight(x);
+		    x.setParent(y);
+		  
+}
 }
