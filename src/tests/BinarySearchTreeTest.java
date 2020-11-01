@@ -1,14 +1,9 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
-
 import model.BinarySearchTree;
 import model.Node;
-import sun.swing.plaf.synth.DefaultSynthStyle;
 
 class BinarySearchTreeTest {
 
@@ -92,11 +87,58 @@ class BinarySearchTreeTest {
 		assertTrue(tree.deleteValue(42), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(42));
 		
-		//TODO Fix this
 		assertTrue(tree.deleteValue(-23), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(-23));
 
 		assertTrue(tree.deleteValue(1), "Tree is not deleting a value it should delete");
 		assertNull(tree.searchValue(1));
+	}
+	
+	@Test
+	public void weightTest() {
+		setup1();
+		assertTrue(tree.weight() == 7, "The amount of nodes was not counted properly");
+		
+		tree.insert(50, 50);
+		assertTrue(tree.weight() == 8, "The amount of nodes was not counted properly");
+		
+		tree.deleteValue(11);
+		assertTrue(tree.weight() == 7, "The amount of nodes was not counted properly");
+		
+		tree.deleteValue(50);
+		assertTrue(tree.weight() == 6, "The amount of nodes was not counted properly");
+	}
+	
+	//TODO Finish this method
+	@Test
+	public void heightTest() {
+		setup1();
+		assertTrue(tree.height() == 3);
+		
+		tree.insert(12, 12);
+		assertTrue(tree.height() == 4);
+		
+		tree.deleteValue(12);
+		assertTrue(tree.height() == 3);
+		
+		tree.deleteValue(11);
+		assertTrue(tree.height() == 2);
+	}
+	
+
+	@Test
+	public void maxTest() {
+		setup1();
+		assertTrue(tree.maximumValue(tree.getRoot()).getElement() == 42, "The method did not find the proper maximum value");
+		tree.deleteValue(42);
+		assertTrue(tree.maximumValue(tree.getRoot()).getElement() == 11, "The method did not find the proper maximum value");
+	}
+	
+	@Test
+	public void minTest() {
+		setup1();
+		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -25, "The method did not find the proper minimum value");
+		tree.deleteValue(-25);
+		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -23, "The method did not find the proper minimum value");
 	}
 }

@@ -5,32 +5,51 @@ import java.util.ArrayList;
 
 public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearchTree<K, E> {
 	private Node<K,E> root;
-	public Node<K, E> getRoot() {
-		return root;
-	}
-
-	public void setRoot(Node<K, E> root) {
-		this.root = root;
-	}
-
 	private int weight;
-
+	
 	public BinarySearchTree() {
 		this.root = null;
 	}
+
+	//Delete method
+	public Node<K,E> minimumValue(Node<K,E> node) {
+		if(node!=null) {
+			if(node.getLeft()==null) {
+				return node;
+			}else {
+					return minimumValue(node.getLeft());		
+			}
+		}
+		return null;
 	
+	}
+	
+	public Node<K,E> maximumValue(Node<K,E> node) {
+		if(node!=null) {
+			if(node.getRight()==null) {
+				return node;
+			}else {
+					return maximumValue(node.getRight());		
+			}
+		}
+		return null;
+	
+	}
 	@Override
 	public void insert(E element, K key) {
 		Node<K,E> newNode = new Node<K,E>(key,element);	
 		if(root == null) {
 			root = newNode;
+			
 		}else {
 			insert(newNode, root);
 		}
+		
+		weight++;
 		//TODO		
 		//updateHeight(newNode);
 	}
-	
+
 	private void insert(Node<K,E> toAdd,Node<K,E> current) {
 		if(toAdd.getKey().compareTo(current.getKey()) >= 0) {
 			if(current.getRight()==null) {
@@ -48,19 +67,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 			}
 		}
 	}
-	
-	//Delete method
-	public Node<K,E> minimumValue(Node<K,E> node) {
-		if(node!=null) {
-			if(node.getLeft()==null) {
-				return node;
-			}else {
-					return minimumValue(node.getLeft());		
-			}
-		}
-		return null;
-	
-	}
+
 	@Override
 	public boolean deleteValue(K key) {
 		if(root == null) {
@@ -82,6 +89,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 			return deleteValue(current.getLeft(),value);
 				
 		}else {
+			weight--;
 			if(current.getLeft() != null && current.getRight() != null) {
 				return deleteTreeTwoSons(current);	
 				
@@ -261,7 +269,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	
 	@Override
 	public int weight() {
-		return this.weight;
+		return weight;
 	}
 	//Search method
 	@Override
@@ -350,5 +358,13 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		if(n.getLeft() != null) {
 			preOrder(list, n.getLeft());
 		}
+	}
+
+	public Node<K, E> getRoot() {
+		return root;
+	}
+
+	public void setRoot(Node<K, E> root) {
+		this.root = root;
 	}
 }
