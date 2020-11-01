@@ -113,6 +113,8 @@ class BinarySearchTreeTest {
 	@Test
 	public void heightTest() {
 		setup1();
+		Node<Integer,Integer> root = tree.getRoot();
+		
 		assertTrue(tree.height() == 3);
 		
 		tree.insert(12, 12);
@@ -123,6 +125,13 @@ class BinarySearchTreeTest {
 		
 		tree.deleteValue(11);
 		assertTrue(tree.height() == 2);
+		
+		tree.deleteValue(42);
+		assertTrue(root.getRight().getHeight() == 0);
+
+		tree.deleteValue(-23);
+		assertTrue(root.getLeft().getHeight() == 1);
+		
 	}
 	
 

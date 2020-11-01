@@ -44,10 +44,8 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}else {
 			insert(newNode, root);
 		}
-		
+		updateHeight(newNode);
 		weight++;
-		//TODO		
-		//updateHeight(newNode);
 	}
 
 	private void insert(Node<K,E> toAdd,Node<K,E> current) {
@@ -98,6 +96,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				
 			}else {
 				return deleteTreeNoSons(current);
+
 			}
 		}	
 	}
@@ -109,8 +108,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		}else {
 			parent.setRight(null);
 		}
-		//TODO	
-		//updateHeight(parent);
+		updateHeight(parent);
 		return true;
 	}
 
@@ -122,15 +120,15 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				Node <K,E> aux = current.getLeft();
 				parent.setLeft(aux);
 				aux.setParent(parent);
+				updateHeight(parent);
 				return true;
 			}else {
 				Node <K,E> aux = current.getLeft();
 				parent.setRight(aux);
-				aux.setParent(parent);	
+				aux.setParent(parent);
+				updateHeight(parent);
 				return true;
 			}
-			//TODO	
-			//updateHeight(p);
 			
 		}else if(current.getRight()!=null) {
 			
@@ -166,6 +164,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				current.getLeft().setParent(temp);
 				current.getRight().setParent(temp);
 				this.root=temp;
+				updateHeight(temp);
 				return true;
 			}else {
 				temp.setRight(current.getRight());
@@ -183,6 +182,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 					current.getRight().setParent(temp);
 				}
 				current=temp;
+				updateHeight(temp);
 				return true;
 			}
 		}else {
@@ -201,6 +201,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				}
 				
 				this.root=temp;
+				updateHeight(temp);
 				return true;
 			}else {
 				temp.setRight(current.getRight());
@@ -222,6 +223,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				
 				current.setParent(null);
 				current=temp;
+				updateHeight(temp);
 				return true;
 			}
 		}
@@ -252,8 +254,8 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	@Override
 	public void updateHeight(Node<K,E> currentNode) {
 		if(currentNode!=null) {
-			int leftHeight = 0;
-			int rightHeight = 0;
+			int leftHeight = -1;
+			int rightHeight = -1;
 			
 			if(currentNode.getRight()!=null) {
 				rightHeight = currentNode.getRight().getHeight();
@@ -261,7 +263,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 			if(currentNode.getLeft()!=null) {
 				leftHeight = currentNode.getLeft().getHeight();
 			}
-			int currentHeight = Math.max(leftHeight, rightHeight);
+			int currentHeight = 1+Math.max(leftHeight, rightHeight);
 			currentNode.setHeight(currentHeight);
 			updateHeight(currentNode.getParent());
 		}
