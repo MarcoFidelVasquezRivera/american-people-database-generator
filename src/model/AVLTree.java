@@ -33,22 +33,36 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	
 	public int balanceFactor (Node<K,E> node) {
 		if(node!=null) {
-			int right = super.height(node.getRight());
-			int left = super.height(node.getLeft());
+			int right = -1;
+			int left = -1;
+			
+			if(node.getRight()!=null) {
+				right = node.getRight().getHeight();
+			}
+			
+			if(node.getLeft()!=null) {
+				left = node.getLeft().getHeight();
+			}
 			return right - left;
 		}
 		return 0;
 	}
 	
 	public void balance(Node<K,E> node) {
-		int balanceFactor = balanceFactor(node);
-		
-		if(balanceFactor>1) {
-			rightCases(node.getRight());
-		}else if(balanceFactor<-1) {
-			leftCases(node.getLeft());
+		if(node!=null) {
+			
+			int balanceFactor = balanceFactor(node);
+			//System.out.println("entra el metodo "+balanceFactor+" "+node.getElement());
+			if(balanceFactor>1) {
+				rightCases(node.getRight());
+				updateHeight(node);
+			}else if(balanceFactor<(-1)) {
+				leftCases(node.getLeft());
+				//System.out.println(node.getElement()+"---------------");
+				super.updateHeight(node);
+			}
+			balance(node.getParent());
 		}
-		
 	}
 	
 	public void rightCases(Node<K,E> nodeRight) {
@@ -69,6 +83,8 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		}else{
 			Node<K,E> parent = nodeLeft.getParent();
 			leftRotate(nodeLeft);
+			//System.out.println("entra a leftCases "+nodeLeft.getElement()+" "+nodeLeft.getHeight());
+			super.updateHeight(nodeLeft);
 			rightRotate(parent);
 		}
 	}
@@ -102,7 +118,7 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		Node <K,E> left = node.getLeft();
 		Node <K,E> parent = node.getParent();
 		if(parent!=null) {
-			if(parent.getRight().equals(node)) {
+			if(parent.getRight()==node) {
 				parent.setRight(right);
 				right.setParent(parent);
 			}else {
@@ -115,6 +131,8 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		if(right.getLeft()!=null) {
 			node.setRight(right.getLeft());
 			right.getLeft().setParent(node);
+		}else {
+			node.setRight(null);
 		}
 		right.setLeft(node);
 		node.setParent(right);
