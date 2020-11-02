@@ -2,9 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+import customExceptions.ElementAlreadyExistException;
+
 public interface IBinarySearchTree<K extends Comparable<K>,E> {
 	
-	public void insert(E value,K key);
+	public void insert(E value,K key) throws ElementAlreadyExistException;
 	public boolean deleteValue(K key);
 	public int height();
 	public int weight();

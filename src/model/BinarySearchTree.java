@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import customExceptions.ElementAlreadyExistException;
+
 
 public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearchTree<K, E> {
 	private Node<K,E> root;
@@ -36,8 +38,13 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 	
 	}
 	@Override
-	public void insert(E element, K key) {
+	public void insert(E element, K key) throws ElementAlreadyExistException {
 		Node<K,E> newNode = new Node<K,E>(key,element);	
+		
+		if(this.searchValue(key)!=null) {
+			throw new ElementAlreadyExistException();
+		}
+		
 		if(root == null) {
 			root = newNode;
 			

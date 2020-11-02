@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import customExceptions.ElementAlreadyExistException;
 import model.BinarySearchTree;
 import model.Node;
 
@@ -9,7 +11,7 @@ class BinarySearchTreeTest {
 
 	private BinarySearchTree<Integer,Integer> tree;
 	
-	public void setup1() {
+	public void setup1() throws ElementAlreadyExistException {
 		tree = new BinarySearchTree<Integer, Integer>();
 		tree.insert(1,1);
 		tree.insert(42,42);
@@ -21,7 +23,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void insertTest() {
+	public void insertTest() throws ElementAlreadyExistException {
 		BinarySearchTree<Integer, Integer> abb = new BinarySearchTree<Integer, Integer>();
 		abb.insert(1,1);
 		Node<Integer,Integer> root = abb.getRoot();
@@ -53,7 +55,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void searchTest() {
+	public void searchTest() throws ElementAlreadyExistException {
 		setup1();
 		
 		int Number = tree.searchValue(1).getElement();
@@ -76,7 +78,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void deleteTest() {
+	public void deleteTest() throws ElementAlreadyExistException {
 		setup1();
 
 		assertFalse(tree.deleteValue(0), "Tree is deleting a value it should not delete");
@@ -95,7 +97,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void weightTest() {
+	public void weightTest() throws ElementAlreadyExistException {
 		setup1();
 		assertTrue(tree.weight() == 7, "The amount of nodes was not counted properly");
 		
@@ -111,7 +113,7 @@ class BinarySearchTreeTest {
 	
 	//TODO Finish this method
 	@Test
-	public void heightTest() {
+	public void heightTest() throws ElementAlreadyExistException {
 		setup1();
 		Node<Integer,Integer> root = tree.getRoot();
 		
@@ -136,7 +138,7 @@ class BinarySearchTreeTest {
 	
 
 	@Test
-	public void maxTest() {
+	public void maxTest() throws ElementAlreadyExistException {
 		setup1();
 		assertTrue(tree.maximumValue(tree.getRoot()).getElement() == 42, "The method did not find the proper maximum value");
 		tree.deleteValue(42);
@@ -144,7 +146,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void minTest() {
+	public void minTest() throws ElementAlreadyExistException {
 		setup1();
 		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -25, "The method did not find the proper minimum value");
 		tree.deleteValue(-25);
