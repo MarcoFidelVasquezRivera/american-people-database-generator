@@ -13,11 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.AVLTree;
 
 public class GenerationDataController implements Initializable {
 	
 	private MenuController mc;
 	private Stage generetionData;
+	private AVLTree avlTree;
 	
     @FXML
     private TextField nGenerate;
@@ -36,6 +38,17 @@ public class GenerationDataController implements Initializable {
     
     @FXML
     void generationData(ActionEvent event) {
+    	progressBar = new ProgressBar(0);
+    	double i = 0;
+    	try {
+    		while(i <= 1) {
+    		Thread.sleep(50);
+    		progressBar.setProgress(i);
+    		i += 0.1;
+    		}
+		} catch (Exception e) {
+			
+		} 
     	
     }
 
