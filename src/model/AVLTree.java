@@ -15,22 +15,35 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		balance(n);
 	}
 	
-	public void delete(E element, K key) {
+	public void delete(K key) {
 		Node<K,E> n = super.searchValue(key);
 		Node<K,E> parent = n.getParent();
 		boolean direction = true;
 		
+		if(n.getLeft()!=null && n.getRight()!=null) {
+			
+		}
 		if(parent.getLeft()==n) {
 			direction = false;
 		}
 		
 		super.deleteValue(key);
 		
-		if(direction) {
-			balance(parent.getRight());
+		if(n.getLeft()!=null && n.getRight()!=null) {
+			if(direction) {
+				balance(parent.getRight());
+			}else {
+				balance(parent.getLeft());
+			}
 		}else {
-			balance(parent.getLeft());
+			if(direction) {
+				balance(parent);
+			}else {
+				balance(parent);
+			}
 		}
+
+		
 	}
 	
 	public int balanceFactor (Node<K,E> node) {
@@ -54,13 +67,11 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		if(node!=null) {
 			
 			int balanceFactor = balanceFactor(node);
-			//System.out.println("entra el metodo "+balanceFactor+" "+node.getElement());
 			if(balanceFactor>1) {
 				rightCases(node.getRight());
 				updateHeight(node);
 			}else if(balanceFactor<(-1)) {
 				leftCases(node.getLeft());
-				//System.out.println(node.getElement()+"---------------");
 			}
 			balance(node.getParent());
 		}
@@ -74,7 +85,6 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 			leftRotate(parent);
 			super.updateHeight(parent);
 		}else{
-			System.out.println("entra al else");
 			Node<K,E> parent = nodeRight.getParent();
 			
 			rightRotate(nodeRight);

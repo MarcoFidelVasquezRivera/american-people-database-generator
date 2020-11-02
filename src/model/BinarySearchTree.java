@@ -193,6 +193,7 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				return true;
 			}
 		}else {
+			System.out.println();
 			Node<K,E> temp =minRightValue;
 			deleteTreeNoSons(minRightValue);
 			if(current==this.root) {
@@ -375,5 +376,27 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 
 	public void setRoot(Node<K, E> root) {
 		this.root = root;
+	}
+	
+	public void prettyPrint() {
+        printHelper(this.root, "", true);
+	}
+	
+	private void printHelper(Node<K,E> root, String indent, boolean last) {
+		// print the tree structure on the screen
+	   	if (root != null) {
+		   System.out.print(indent);
+		   if (last) {
+		      System.out.print("R----");
+		      indent += "     ";
+		   } else {
+		      System.out.print("L----");
+		      indent += "|    ";
+		   }
+            
+		   System.out.println(root.getElement());
+		   printHelper(root.getLeft(), indent, false);
+		   printHelper(root.getRight(), indent, true);
+		}
 	}
 }
