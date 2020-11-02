@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import model.RBTNode;
+import customExceptions.ElementAlreadyExistException;
 import model.RedBlackTree;
 
 class RedBlackTreeTest {
 
 	@Test
-	void test() throws Exception{
+	void test() throws ElementAlreadyExistException{
 		RedBlackTree<Integer, Integer> tree = new RedBlackTree<Integer, Integer>(-959, null);	
 		
 		tree.insertion(50, 50);		
@@ -40,10 +40,6 @@ class RedBlackTreeTest {
 		assertTrue(tree.getRoot().getLeft().getLeft().getElement() == 48 && tree.getRoot().getLeft().getLeft().getColor() == true);
 		assertTrue(tree.getRoot().getLeft().getRight().getElement() == 50 && tree.getRoot().getLeft().getRight().getColor() == true);
 
-		tree.delete(70);
-		tree.prettyPrint();
-		tree.insertion(70,70);
-		tree.prettyPrint();
 		try {
 			tree.insertion(50, 50);
 			fail();

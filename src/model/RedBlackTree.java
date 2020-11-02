@@ -1,5 +1,7 @@
 package model;
 
+import customExceptions.ElementAlreadyExistException;
+
 public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K, E> {
 
 	public static final boolean RED = true;
@@ -13,9 +15,9 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		this.root = NIL;
 	}
 	
-	public RBTNode<K,E> insertion(K key, E element) throws Exception{
+	public RBTNode<K,E> insertion(K key, E element) throws ElementAlreadyExistException{
 		if(searchValue(key) != null) {
-			throw new Exception("WRONG");
+			throw new ElementAlreadyExistException();
 		}else {
 			RBTNode<K, E> node = new RBTNode<K,E>(key, element);
 			if(this.root == NIL) {
