@@ -48,6 +48,9 @@ class RedBlackTreeTest {
 		assertTrue(tree.getRoot().getLeft().getElement() == 49 && tree.getRoot().getLeft().getColor() == false);
 		assertTrue(tree.getRoot().getLeft().getLeft().getElement() == 48 && tree.getRoot().getLeft().getLeft().getColor() == true);
 		assertTrue(tree.getRoot().getLeft().getRight().getElement() == 50 && tree.getRoot().getLeft().getRight().getColor() == true);
+		
+		tree.delete(71);
+		tree.prettyPrint();
 	}
 
 }
