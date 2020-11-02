@@ -5,12 +5,33 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	public static final boolean RED = true;
 	public static final boolean BLACK = false;
 	private RBTNode<K,E> root;
+	private RBTNode<K,E> NIL;
 
-	public RedBlackTree() {
+	public RedBlackTree(K key, E element) {
 		super();
+		NIL = new RBTNode<K,E>(key, element);
+		this.root = NIL;
+	}
+	
+	public RBTNode<K,E> insertion(K key, E element) throws Exception{
+		if(searchValue(key) != null) {
+			throw new Exception("WRONG");
+		}else {
+			RBTNode<K, E> node = new RBTNode<K,E>(key, element);
+			if(this.root == NIL) {
+				this.root = node;
+				root.setColor(BLACK);
+				root.setLeft(NIL);
+				root.setRight(NIL);
+				root.setParent(NIL);
+				return root;
+			}else return insert(this.root, node);
+		}
+		
 	}
 
-	public RBTNode<K,E> insert(RBTNode<K,E> root, RBTNode<K,E> node) {
+	private RBTNode<K,E> insert(RBTNode<K,E> root, RBTNode<K,E> node) {
+		
 		insertRecurse(root, node);
 
 		//Repair tree if cases are violated
@@ -18,7 +39,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 
 		//Find root to return
 		root = node;
-		while(root.getParent() != null) {
+		while(root.getParent() != NIL) {
 			root = root.getParent();
 		}
 
@@ -28,12 +49,9 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 
 
 	private void insertRecurse(RBTNode<K, E> current, RBTNode<K, E> toAdd) {	
-		if(current == null) {
-			root = toAdd;
-		}
-		else if(current != null) {
+		if(current != NIL) {
 			if(toAdd.getKey().compareTo(current.getKey()) < 0) {
-				if(current.getLeft() != null) {
+				if(current.getLeft() != NIL) {
 					insertRecurse(current.getLeft(), toAdd);
 					return;
 				}else {
@@ -41,7 +59,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 				}
 
 			}else {// node.key >= root.key			
-				if(current.getRight() != null) {
+				if(current.getRight() != NIL) {
 					insertRecurse(current.getRight(), toAdd);
 					return;
 				}else {
@@ -52,14 +70,14 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 
 		}		
 		toAdd.setParent(current);
-		toAdd.setLeft(null);
-		toAdd.setRight(null);
+		toAdd.setLeft(NIL);
+		toAdd.setRight(NIL);
 		toAdd.setColor(RED);
 
 	}
 
 	private void insertRepairTree(RBTNode<K,E> node){
-		if(node.getParent() == null) {
+		if(node.getParent() == NIL) {
 			//Node will be the root of the tree since its empty
 			insertCase1(node);
 		}
@@ -67,7 +85,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 			//Node's parent is BLACK
 			insertCase2(node);
 		}
-		else if(getUncle(node) != null && getUncle(node).getColor() == RED) {
+		else if(getUncle(node) != NIL && getUncle(node).getColor() == RED) {
 			//Parent is RED(so it cant be root) and uncle is RED
 			insertCase3(node);
 		}else {
@@ -107,8 +125,22 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		insertCase4Phase2(node);
 	}
 
-    public RBTNode<K, E> searchValue(K key) {
-		if(root==null) {
+    private void insertCase4Phase2(RBTNode<K,E> node) {
+		RBTNode<K,E> parent = node.getParent();
+		RBTNode<K,E> grandParent = getGrandParent(node);
+	
+		if(node == parent.getLeft()) {
+			rotateRight(grandParent);
+		}else {
+			rotateLeft(grandParent);
+		}
+	
+		parent.setColor(BLACK);
+		grandParent.setColor(RED);
+	}
+
+	public RBTNode<K, E> searchValue(K key) {
+		if(root==NIL) {
 			return null;
 		}else {
 			return searchValue(root,key);
@@ -117,17 +149,17 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 
 	public boolean delete(K key){
         RBTNode<K,E> z = searchValue(key);
-        if(z == null) return false;
+        if(z == null || z == NIL) return false;
         
         
         RBTNode<K,E> x;
         RBTNode<K,E> y = z; // temporary reference y
         boolean y_original_color = y.getColor();
         
-        if(z.getLeft() == null){
+        if(z.getLeft() == NIL){
             x = z.getRight();  
             transplant(z, z.getRight());  
-        }else if(z.getRight() == null){
+        }else if(z.getRight() == NIL){
             x = z.getLeft();
             transplant(z, z.getLeft()); 
         }else{
@@ -135,7 +167,6 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
             y_original_color = y.getColor();
             x = y.getRight();
             if(y.getParent() == z) {
-            	System.out.println(x + "  " + y + "  " + z);
                 x.setParent(y);
                 }else{
                 transplant(y, y.getRight());
@@ -153,7 +184,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
     }
     
     public RBTNode<K,E> treeMinimum(RBTNode<K,E> subTreeRoot){
-        while(subTreeRoot.getLeft() != null){
+        while(subTreeRoot.getLeft() != NIL){
             subTreeRoot = subTreeRoot.getLeft();
         }
         return subTreeRoot;
@@ -219,7 +250,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
     }
     
     private void transplant(RBTNode<K,E> target, RBTNode<K,E> with){ 
-    	if(target.getParent() == null){
+    	if(target.getParent() == NIL){
     		this.root = with;
     	}else if(target == target.getParent().getLeft()){
     		target.getParent().setLeft(with);
@@ -228,20 +259,6 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
     	with.setParent(target.getParent());
     }
 
-	private void insertCase4Phase2(RBTNode<K,E> node) {
-		RBTNode<K,E> parent = node.getParent();
-		RBTNode<K,E> grandParent = getGrandParent(node);
-
-		if(node == parent.getLeft()) {
-			rotateRight(grandParent);
-		}else {
-			rotateLeft(grandParent);
-		}
-
-		parent.setColor(BLACK);
-		grandParent.setColor(RED);
-	}
-	
 	private RBTNode<K,E> searchValue(RBTNode<K,E> root,K key){
 		if(root==null) {
 			return root;
@@ -283,11 +300,11 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	public void rotateLeft(RBTNode<K,E> x) {
 		RBTNode<K,E> y = x.getRight();
 		x.setRight(y.getLeft());
-		if(y.getLeft() != null) {
+		if(y.getLeft() != NIL) {
 			y.getLeft().setParent(x);
 		}
 		y.setParent(x.getParent());
-		if(x.getParent() == null) { //x is root
+		if(x.getParent() == NIL) { //x is root
 			this.root = y;
 		}
 		else if(x == x.getParent().getLeft()) { //x is left child
@@ -303,11 +320,11 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	public void rotateRight(RBTNode<K,E> x) {
 		RBTNode<K,E> y = x.getLeft();
 		x.setLeft(y.getRight());
-		if(y.getRight() != null) {
+		if(y.getRight() != NIL) {
 			y.getRight().setParent(x);
 		}
 		y.setParent(x.getParent());
-		if(x.getParent() == null) { //x is root
+		if(x.getParent() == NIL) { //x is root
 			this.root = y;
 		}
 		else if(x == x.getParent().getRight()) { //x is left child
