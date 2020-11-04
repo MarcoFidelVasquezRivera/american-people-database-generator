@@ -15,7 +15,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		this.root = NIL;
 	}
 	
-	public RBTNode<K,E> insertion(K key, E element) throws ElementAlreadyExistException{
+	public RBTNode<K,E> redBlackInsertion(K key, E element) throws ElementAlreadyExistException{
 		if(searchValue(key) != null) {
 			throw new ElementAlreadyExistException();
 		}else {
@@ -150,38 +150,40 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 	}
 
 	public boolean delete(K key){
-        RBTNode<K,E> z = searchValue(key);
-        if(z == null || z == NIL) return false;
-        
-        
-        RBTNode<K,E> x;
-        RBTNode<K,E> y = z; // temporary reference y
-        boolean y_original_color = y.getColor();
-        
-        if(z.getLeft() == NIL){
-            x = z.getRight();  
-            transplant(z, z.getRight());  
-        }else if(z.getRight() == NIL){
-            x = z.getLeft();
-            transplant(z, z.getLeft()); 
-        }else{
-            y = treeMinimum(z.getRight());
-            y_original_color = y.getColor();
-            x = y.getRight();
-            if(y.getParent() == z) {
-                x.setParent(y);
-                }else{
-                transplant(y, y.getRight());
-                y.setRight(z.getRight());
-                y.getRight().setParent(y);
-            }
-            transplant(z, y);
-            y.setLeft(z.getLeft());
-            y.getLeft().setParent(y);
-            y.setColor(z.getColor()); 
+        RBTNode<K,E> toDelete = searchValue(key);
+        if(toDelete == null || toDelete == NIL) {
+        	return false;
         }
-        if(y_original_color==BLACK)
-            deleteFixup(x);  
+        
+        
+        RBTNode<K,E> child;
+        RBTNode<K,E> temp = toDelete; // temporary reference temp
+        boolean temp_original_color = temp.getColor();
+        
+        if(toDelete.getLeft() == NIL){
+            child = toDelete.getRight();  
+            transplant(toDelete, toDelete.getRight());  
+        }else if(toDelete.getRight() == NIL){
+            child = toDelete.getLeft();
+            transplant(toDelete, toDelete.getLeft()); 
+        }else{
+            temp = treeMinimum(toDelete.getRight());
+            temp_original_color = temp.getColor();
+            child = temp.getRight();
+            if(temp.getParent() == toDelete) {
+                child.setParent(temp);
+                }else{
+                transplant(temp, temp.getRight());
+                temp.setRight(toDelete.getRight());
+                temp.getRight().setParent(temp);
+            }
+            transplant(toDelete, temp);
+            temp.setLeft(toDelete.getLeft());
+            temp.getLeft().setParent(temp);
+            temp.setColor(toDelete.getColor()); 
+        }
+        if(temp_original_color==BLACK)
+            deleteFixup(child);  
         return true;
     }
     
@@ -192,63 +194,63 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
         return subTreeRoot;
     }
     
-    private void deleteFixup(RBTNode<K,E> x){
-        while(x != this.root && x.getColor() == BLACK){ 
-            if(x == x.getParent().getLeft()){
-            	RBTNode<K,E> w = x.getParent().getRight();
+    private void deleteFixup(RBTNode<K,E> child){
+        while(child != this.root && child.getColor() == BLACK){ 
+            if(child == child.getParent().getLeft()){
+            	RBTNode<K,E> w = child.getParent().getRight();
                 if(w.getColor()  == RED){
                     w.setColor(BLACK);
-                    x.getParent().setColor(RED);
-                    rotateLeft(x.getParent());
-                    w = x.getParent().getRight();
+                    child.getParent().setColor(RED);
+                    rotateLeft(child.getParent());
+                    w = child.getParent().getRight();
                 }
                 if(w.getLeft().getColor()  == BLACK && w.getRight().getColor()  == BLACK){
                     w.setColor(RED);
-                    x = x.getParent();
+                    child = child.getParent();
                     continue;
                 }
                 else if(w.getRight().getColor()  == BLACK){
                     w.getLeft().setColor(BLACK);
                     w.setColor(RED);
                     rotateRight(w);
-                    w = x.getParent().getRight();
+                    w = child.getParent().getRight();
                 }
                 if(w.getRight().getColor()  == RED){
-                    w.setColor(x.getParent().getColor());
-                    x.getParent().setColor(BLACK);
+                    w.setColor(child.getParent().getColor());
+                    child.getParent().setColor(BLACK);
                     w.getRight().setColor(BLACK);
-                    rotateLeft(x.getParent());
-                    x = this.root;
+                    rotateLeft(child.getParent());
+                    child = this.root;
                 }
             }else{
-            	RBTNode<K,E> w = x.getParent().getLeft();
+            	RBTNode<K,E> w = child.getParent().getLeft();
                 if(w.getColor()  == RED){
                     w.setColor(BLACK);
-                    x.getParent().setColor(RED);
-                    rotateRight(x.getParent());
-                    w = x.getParent().getLeft();
+                    child.getParent().setColor(RED);
+                    rotateRight(child.getParent());
+                    w = child.getParent().getLeft();
                 }
                 if(w.getRight().getColor() == BLACK && w.getLeft().getColor() == BLACK){
                     w.setColor(RED);
-                    x = x.getParent();
+                    child = child.getParent();
                     continue;
                 }
                 else if(w.getLeft().getColor() == BLACK){
                     w.getRight().setColor(BLACK);
                     w.setColor(RED);
                     rotateLeft(w);
-                    w = x.getParent().getLeft();
+                    w = child.getParent().getLeft();
                 }
                 if(w.getLeft().getColor() == RED){
-                    w.setColor(x.getParent().getColor());
-                    x.getParent().setColor(BLACK);
+                    w.setColor(child.getParent().getColor());
+                    child.getParent().setColor(BLACK);
                     w.getLeft().setColor(BLACK);
-                    rotateRight(x.getParent());
-                    x = root;
+                    rotateRight(child.getParent());
+                    child = root;
                 }
             }
         }
-        x.setColor(BLACK); 
+        child.setColor(BLACK); 
     }
     
     private void transplant(RBTNode<K,E> target, RBTNode<K,E> with){ 
@@ -299,44 +301,44 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		return getSibling(parent);
 	}
 
-	public void rotateLeft(RBTNode<K,E> x) {
-		RBTNode<K,E> y = x.getRight();
-		x.setRight(y.getLeft());
-		if(y.getLeft() != NIL) {
-			y.getLeft().setParent(x);
+	public void rotateLeft(RBTNode<K,E> child) {
+		RBTNode<K,E> temp = child.getRight();
+		child.setRight(temp.getLeft());
+		if(temp.getLeft() != NIL) {
+			temp.getLeft().setParent(child);
 		}
-		y.setParent(x.getParent());
-		if(x.getParent() == NIL) { //x is root
-			this.root = y;
+		temp.setParent(child.getParent());
+		if(child.getParent() == NIL) { //child is root
+			this.root = temp;
 		}
-		else if(x == x.getParent().getLeft()) { //x is left child
-			x.getParent().setLeft(y);
+		else if(child == child.getParent().getLeft()) { //child is left child
+			child.getParent().setLeft(temp);
 		}
-		else { //x is right child
-			x.getParent().setRight(y);
+		else { //child is right child
+			child.getParent().setRight(temp);
 		}
-		y.setLeft(x);
-		x.setParent(y);
+		temp.setLeft(child);
+		child.setParent(temp);
 	}
 
-	public void rotateRight(RBTNode<K,E> x) {
-		RBTNode<K,E> y = x.getLeft();
-		x.setLeft(y.getRight());
-		if(y.getRight() != NIL) {
-			y.getRight().setParent(x);
+	public void rotateRight(RBTNode<K,E> child) {
+		RBTNode<K,E> temp = child.getLeft();
+		child.setLeft(temp.getRight());
+		if(temp.getRight() != NIL) {
+			temp.getRight().setParent(child);
 		}
-		y.setParent(x.getParent());
-		if(x.getParent() == NIL) { //x is root
-			this.root = y;
+		temp.setParent(child.getParent());
+		if(child.getParent() == NIL) { //child is root
+			this.root = temp;
 		}
-		else if(x == x.getParent().getRight()) { //x is left child
-			x.getParent().setRight(y);
+		else if(child == child.getParent().getRight()) { //child is left child
+			child.getParent().setRight(temp);
 		}
-		else { //x is right child
-			x.getParent().setLeft(y);
+		else { //child is right child
+			child.getParent().setLeft(temp);
 		}
-		y.setRight(x);
-		x.setParent(y);
+		temp.setRight(child);
+		child.setParent(temp);
 
 	}
 
