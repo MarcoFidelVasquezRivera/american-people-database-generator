@@ -13,7 +13,7 @@ import customExceptions.ElementAlreadyExistException;
 
 class AVLTreeTest {
 	
-	public AVLTree<Integer, Integer> tree;
+	private AVLTree<Integer, Integer> tree;
 	
 	public void setup2() throws ElementAlreadyExistException {
 		tree =  new AVLTree<>();

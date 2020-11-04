@@ -15,7 +15,7 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		this.root = NIL;
 	}
 	
-	public RBTNode<K,E> insertion(K key, E element) throws ElementAlreadyExistException{
+	public RBTNode<K,E> redBlackInsertion(K key, E element) throws ElementAlreadyExistException{
 		if(searchValue(key) != null) {
 			throw new ElementAlreadyExistException();
 		}else {
