@@ -135,15 +135,15 @@ class RedBlackTreeTest {
 	 
 	void deleteTest() throws ElementAlreadyExistException{
 		setup1();
-		
+
 		assertFalse(blackTree.delete(50), "Tree is deleting a value it should not");
-		
+
 		assertTrue(blackTree.delete(18), "Tree is not deleting correctly");
 		assertTrue(blackTree.getRoot().getRight().getRight().getColor() == false, "The color of the replacement is not correct");
 		
 		assertTrue(blackTree.delete(9), "Tree is not deleting correctly");
-		assertTrue(blackTree.getRoot().getColor() == false, "The color of the replacement is not correct");
-			
+		assertTrue(blackTree.getRoot().getColor() == false, "The color of the replacement is not correct");	
+		
 		assertTrue(blackTree.delete(20), "Tree is not deleting correctly");
 		assertTrue(blackTree.getRoot().getRight().getRight().getColor() == false, "The color of the replacement is not correct");
 		
