@@ -27,6 +27,7 @@ class RedBlackTreeTest {
 	@Test
 	void insertTest() throws ElementAlreadyExistException{
 		RedBlackTree<Integer, Integer> tree = new RedBlackTree<Integer, Integer>(-1, null);	
+		
 		tree.redBlackInsertion(50,50);		
 		assertTrue(tree.getRoot().getElement() == 50, "Tree is not adding proper value to the root");
 		assertTrue(tree.getRoot().getColor() == false, "Tree is not adding root as black");
@@ -113,7 +114,6 @@ class RedBlackTreeTest {
 			fail();
 		} catch (Exception e) {
 		}
-		
 	}
 
 	
@@ -130,7 +130,9 @@ class RedBlackTreeTest {
 		
 	}
 	
+	
 	@Test
+	 
 	void deleteTest() throws ElementAlreadyExistException{
 		setup1();
 		
