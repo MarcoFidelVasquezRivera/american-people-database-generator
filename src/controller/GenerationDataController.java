@@ -19,13 +19,9 @@ public class GenerationDataController implements Initializable {
 	
 	private MenuController mc;
 	private Stage generetionData;
-	private AVLTree avlTree;
 	
     @FXML
     private TextField nGenerate;
-
-    @FXML
-    private Label textNotification;
 
     @FXML
     private ProgressBar progressBar;
@@ -35,34 +31,36 @@ public class GenerationDataController implements Initializable {
 		generetionData = new Stage();
 		
 	}
-    
-    @FXML
-    void generationData(ActionEvent event) {
-    	progressBar = new ProgressBar(0);
-    	double i = 0;
-    	try {
-    		while(i <= 1) {
-    		Thread.sleep(50);
-    		progressBar.setProgress(i);
-    		i += 0.1;
-    		}
-		} catch (Exception e) {
-			
-		} 
-    	
-    }
 
     public Stage getGeneretionData() {
-		return generetionData;
-	}
+  		return generetionData;
+  	}
 
-	public void setGeneretionData(Stage generetionData) {
-		this.generetionData = generetionData;
-	}
+  	public void setGeneretionData(Stage generetionData) {
+  		this.generetionData = generetionData;
+  	}
 
+    @FXML
+    void generationData(ActionEvent event) {
+//    	avlTree.generateDataOn(Integer.parseInt(nGenerate.getText()));
+    	progressBar = new ProgressBar(0);
+    	progressBar.setVisible(true);
+    	progressBar.setProgress(50);
+//    	int i = 1;
+//    	try {
+//    		while(i <= 1) {
+//    		Thread.sleep(0);
+//    		progressBar.setProgress(i/100);
+//    		i += 1;
+//    		}
+//		} catch (Exception e) {
+//			System.out.println("number of people not allowed");
+//		} 
+    }
+  
 	@FXML
     void saveDataGeneration(ActionEvent event) {
-
+		mc.getAvlTree().getSaveData();
     }
 
 }

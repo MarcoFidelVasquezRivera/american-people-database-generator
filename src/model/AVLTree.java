@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	
 	public AVLTree() {
@@ -119,5 +121,25 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		right.setLeft(node);
 		node.setParent(right);
 	}
+
+	
+	//metodo para mandarle el numero de personas que desea generar el usuario
+	public void generateDataOn(int n) {
+	
+		
+	}
+
+	// aqui se serealiza lo datos generados por el usaurio 
+	public void getSaveData() {
+		
+		
+	}
+	
+	// buscar controller conect
+	public ArrayList<String> searchDataAttribute(String promptText, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }	

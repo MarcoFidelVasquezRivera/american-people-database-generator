@@ -13,12 +13,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.AVLTree;
+import model.BinarySearchTree;
 
 public class MenuController implements Initializable {
 
 	private static Main main;
 	private Stage stageEscoger;
-
+	private AVLTree avlTree;
+//	private BinarySearchTree<Comparable<K>, E> abbTree;
+	
 	@FXML
 	private BorderPane borderMain;
 
@@ -26,6 +30,7 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 //		main = new Main();
 		stageEscoger = new Stage();
+		avlTree = new AVLTree<>();
 	}
 
 	public static Main getMain() {
@@ -42,6 +47,16 @@ public class MenuController implements Initializable {
 
 	public void setStageEscoger(Stage stageEscoger) {
 		this.stageEscoger = stageEscoger;
+	}
+
+	
+	
+	public AVLTree getAvlTree() {
+		return avlTree;
+	}
+
+	public void setAvlTree(AVLTree avlTree) {
+		this.avlTree = avlTree;
 	}
 
 	@FXML 
