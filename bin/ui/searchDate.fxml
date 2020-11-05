@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchDataController">
+   <children>
+      <Label layoutX="86.0" layoutY="42.0" text="Search by">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <MenuButton fx:id="selecDataType" layoutX="197.0" layoutY="39.0" mnemonicParsing="false" onAction="#selecDataTypeee" text="Selection the option">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#searchName" text="Name" />
+          <MenuItem mnemonicParsing="false" onAction="#searchLastName" text="Last Name" />
+            <MenuItem mnemonicParsing="false" onAction="#searchFull" text="Full Name" />
+            <MenuItem mnemonicParsing="false" onAction="#searchCode" text="Code" />
+        </items>
+      </MenuButton>
+      <Label fx:id="numberMatches" layoutX="245.0" layoutY="80.0" prefHeight="20.0" prefWidth="14.0" text="#" />
+      <TextField fx:id="textSearch" layoutX="72.0" layoutY="77.0" promptText="Search Data" />
+      <TableView fx:id="table_info" layoutX="72.0" layoutY="119.0" prefHeight="231.0" prefWidth="292.0">
+        <columns>
+          <TableColumn fx:id="columAtributo" prefWidth="179.0" text="Data " />
+          <TableColumn fx:id="columButton" prefWidth="112.0" text="Update Or Delete" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

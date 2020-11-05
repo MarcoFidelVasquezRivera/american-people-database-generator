@@ -1,8 +1,10 @@
+
 package model;
 
 public class Person {
 
 	private int code;
+	private int age;
 	private String name;
 	private String lastName;
 	private String gender;
@@ -10,10 +12,11 @@ public class Person {
 	private double height;
 	private String nationality;
 	private String photography;
-	
-	public Person(int code, String name, String lastName, String gender, String date, double height, String nationality,
-			String photography) {
+
+	public Person(int code, int age, String name, String lastName, String gender, String date, double height,
+			String nationality, String photography) {
 		this.code = code;
+		this.age = age;
 		this.name = name;
 		this.lastName = lastName;
 		this.gender = gender;
@@ -21,6 +24,14 @@ public class Person {
 		this.height = height;
 		this.nationality = nationality;
 		this.photography = photography;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public int getCode() {
@@ -86,5 +97,5 @@ public class Person {
 	public void setPhotography(String photography) {
 		this.photography = photography;
 	}
-	
+
 }

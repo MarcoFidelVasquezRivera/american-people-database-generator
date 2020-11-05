@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,30 +14,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.AVLTree;
 import model.BinarySearchTree;
+import model.Database;
 
 public class MenuController implements Initializable {
 
-	private static Main main;
 	private Stage stageEscoger;
-	private AVLTree avlTree;
-//	private BinarySearchTree<Comparable<K>, E> abbTree;
+	private Database database;
+	
 	
 	@FXML
 	private BorderPane borderMain;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		main = new Main();
 		stageEscoger = new Stage();
-		avlTree = new AVLTree<>();
-	}
-
-	public static Main getMain() {
-		return main;
-	}
-
-	public static void setMain(Main main) {
-		MenuController.main = main;
+		database = new Database();
 	}
 
 	public Stage getStageEscoger() {
@@ -49,19 +39,17 @@ public class MenuController implements Initializable {
 		this.stageEscoger = stageEscoger;
 	}
 
-	
-	
-	public AVLTree getAvlTree() {
-		return avlTree;
+	public Database getDatabase() {
+		return database;
 	}
 
-	public void setAvlTree(AVLTree avlTree) {
-		this.avlTree = avlTree;
+	public void setDatabase(Database database) {
+		this.database = database;
 	}
 
 	@FXML 
 	void generationDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/generationData.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/ui/generationData.fxml"));
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Generation");
@@ -70,7 +58,7 @@ public class MenuController implements Initializable {
 
 	@FXML
 	void searchDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/searchDate.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/ui/searchDate.fxml"));
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Search");

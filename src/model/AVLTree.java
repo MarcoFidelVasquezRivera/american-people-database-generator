@@ -1,6 +1,9 @@
 package model;
 
+
 import java.util.ArrayList;
+import customExceptions.ElementAlreadyExistException;
+
 
 public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	
@@ -9,69 +12,107 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	}
 	
 	@Override
-	public void insert(E element,K key) {
+	public void insert(E element,K key) throws ElementAlreadyExistException {
 		super.insert(element, key);
 		Node<K,E> n = super.searchValue(key);
 		balance(n);
 	}
 	
-	public void delete(E element, K key) {
+	public void delete(K key) {
 		Node<K,E> n = super.searchValue(key);
 		Node<K,E> parent = n.getParent();
 		boolean direction = true;
 		
+		if(n.getLeft()!=null && n.getRight()!=null) {
+			
+		}
 		if(parent.getLeft()==n) {
 			direction = false;
 		}
 		
 		super.deleteValue(key);
 		
-		if(direction) {
-			balance(parent.getRight());
+		if(n.getLeft()!=null && n.getRight()!=null) {
+			if(direction) {
+				balance(parent.getRight());
+			}else {
+				balance(parent.getLeft());
+			}
 		}else {
-			balance(parent.getLeft());
+			if(direction) {
+				balance(parent);
+			}else {
+				balance(parent);
+			}
 		}
+
+		
 	}
 	
 	public int balanceFactor (Node<K,E> node) {
 		if(node!=null) {
-			int right = super.height(node.getRight());
-			int left = super.height(node.getLeft());
+			int right = -1;
+			int left = -1;
+			
+			if(node.getRight()!=null) {
+				right = node.getRight().getHeight();
+			}
+			
+			if(node.getLeft()!=null) {
+				left = node.getLeft().getHeight();
+			}
 			return right - left;
 		}
 		return 0;
 	}
 	
 	public void balance(Node<K,E> node) {
-		int balanceFactor = balanceFactor(node);
-		
-		if(balanceFactor>1) {
-			rightCases(node.getRight());
-		}else if(balanceFactor<-1) {
-			leftCases(node.getLeft());
+		if(node!=null) {
+			
+			int balanceFactor = balanceFactor(node);
+			if(balanceFactor>1) {
+				rightCases(node.getRight());
+				updateHeight(node);
+			}else if(balanceFactor<(-1)) {
+				leftCases(node.getLeft());
+			}
+			balance(node.getParent());
 		}
-		
 	}
 	
 	public void rightCases(Node<K,E> nodeRight) {
 		int balanceFactor = balanceFactor(nodeRight);
 		if(balanceFactor==1 || balanceFactor==0) {
-			leftRotate(nodeRight);
+			Node<K,E> parent = nodeRight.getParent();
+			
+			leftRotate(parent);
+			super.updateHeight(parent);
 		}else{
 			Node<K,E> parent = nodeRight.getParent();
+			
 			rightRotate(nodeRight);
+			super.updateHeight(nodeRight);
+			
 			leftRotate(parent);
+			super.updateHeight(parent);
 		}
 	}
 	
 	public void leftCases(Node<K,E> nodeLeft) {
 		int balanceFactor = balanceFactor(nodeLeft);
 		if(balanceFactor==-1 || balanceFactor==0) {
-			rightRotate(nodeLeft.getParent());
+			Node<K,E> parent = nodeLeft.getParent();
+			rightRotate(parent);
+			super.updateHeight(parent);
 		}else{
 			Node<K,E> parent = nodeLeft.getParent();
+			
 			leftRotate(nodeLeft);
+			//System.out.println("entra a leftCases "+nodeLeft.getElement()+" "+nodeLeft.getHeight());
+			super.updateHeight(nodeLeft);
+			
 			rightRotate(parent);
+			super.updateHeight(parent);
 		}
 	}
 
@@ -79,6 +120,7 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	public void rightRotate(Node <K,E> node) {	
 		Node<K,E> parent =node.getParent();
 		Node <K,E> left = node.getLeft();
+		
 		if(left.getRight()!=null) {
 			Node <K,E> leftRightTree = left.getRight();
 			node.setLeft(leftRightTree);
@@ -86,10 +128,11 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 		}else {
 			node.setLeft(null);
 		}
+
 		left.setRight(node);
 		node.setParent(left);
 		left.setParent(parent);
-		
+
 		if(parent!=null && node==parent.getLeft()) {
 			parent.setLeft(left);
 		}else if(parent!=null && node==parent.getRight()) {
@@ -100,46 +143,28 @@ public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	}
 	
 	public void leftRotate(Node <K,E> node) {
+		Node<K,E> parent =node.getParent();
 		Node <K,E> right = node.getRight();
-		Node <K,E> left = node.getLeft();
-		Node <K,E> parent = node.getParent();
-		if(parent!=null) {
-			if(parent.getRight().equals(node)) {
-				parent.setRight(right);
-				right.setParent(parent);
-			}else {
-				parent.setLeft(right);
-				right.setParent(parent);
-			}
-		}else{
-			setRoot(right);
-		}
+
 		if(right.getLeft()!=null) {
-			node.setRight(right.getLeft());
-			right.getLeft().setParent(node);
+			Node <K,E> rightLeftTree = right.getLeft();
+			node.setRight(rightLeftTree);
+			rightLeftTree.setParent(node);
+		}else {
+			node.setRight(null);
 		}
+
 		right.setLeft(node);
 		node.setParent(right);
-	}
+		right.setParent(parent);
 
-	
-	//metodo para mandarle el numero de personas que desea generar el usuario
-	public void generateDataOn(int n) {
-	
-		
+		if(parent!=null && node==parent.getLeft()) {
+			parent.setLeft(right);
+		}else if(parent!=null && node==parent.getRight()) {
+			parent.setRight(right);
+		}else {
+			setRoot(right);
+		}
 	}
-
-	// aqui se serealiza lo datos generados por el usaurio 
-	public void getSaveData() {
-		
-		
-	}
-	
-	// buscar controller conect
-	public ArrayList<String> searchDataAttribute(String promptText, String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 }	

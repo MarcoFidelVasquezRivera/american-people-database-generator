@@ -62,8 +62,11 @@ public class UpdateOrDeleteController implements Initializable{
    
     @FXML //eliminarlo y volverlo a insertar con la nueva info
     void updateData(ActionEvent event) {
-//    	Person personUp = new Person();
-//    	person.setName(name.getText());
+    	int codeN = Integer.parseInt(code.getText());
+    	String nameN = name.getText();
+    	String LastNameN = lastName.getText();
+//     	mc.getDatabase().updatePerson();
+//    	mc.person.setName(name.getText());
 //		person.setGender(gender.getText());
 //		person.setDate(dataBirth.getText());
 //		person.setHeight(height.getText());
@@ -74,7 +77,8 @@ public class UpdateOrDeleteController implements Initializable{
     
     @FXML
     void deleteData(ActionEvent event) {
-//    	mc.getAvlTree().getRoot().delete(code.getText());
+    	// eliminar persona marco
+//    	mc.getDatabase().deletePerson("llave");
     }
 	
 }

@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import org.hamcrest.core.IsEqual;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,17 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import model.AVLTree;
 import model.Person;
 
 public class SearchDataController implements Initializable {
@@ -81,19 +76,19 @@ public class SearchDataController implements Initializable {
 		
 		});
 		for (int i = 0; i < 20; i++) {
-//			tableInfo.add(listaB.get(i),boton);
+//			tableInfo.add(listaB.get(i),new boton);
 		}
 	}
 	
 	private void searchOption(KeyEvent event) {
 		if (textSearch.getText().equals(CODE)) {
-			listaB = mc.getAvlTree().searchDataAttribute(textSearch.getText(), CODE);
+//			listaB = mc.getDatabase().searchDataAttribute(textSearch.getText(), CODE);
 		} else if (textSearch.getText().equals(FULL_NAME)) {
-			listaB = mc.getAvlTree().searchDataAttribute(textSearch.getText(), FULL_NAME);
+//			listaB = mc.getDatabase().searchDataAttribute(textSearch.getText(), FULL_NAME);
 		} else if (textSearch.getText().equals(NAME)) {
-			listaB = mc.getAvlTree().searchDataAttribute(textSearch.getText(), NAME);
+//			listaB = mc.getDatabase().searchDataAttribute(textSearch.getText(), NAME);
 		} else if (textSearch.getText().equals(LASTNAME)) {
-			listaB = mc.getAvlTree().searchDataAttribute(textSearch.getText(), LASTNAME);
+//			listaB = mc.getDatabase().searchDataAttribute(textSearch.getText(), LASTNAME);
 		} else if (textSearch.getText() == "") {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setHeaderText(null);
@@ -127,22 +122,22 @@ public class SearchDataController implements Initializable {
 
 	@FXML
 	public void searchCode(ActionEvent event) {
-		textSearch.setText("Code");
+		textSearch.setPromptText("Code");
 	}
 
 	@FXML
 	public void searchFull(ActionEvent event) {
-		textSearch.setText("Full Name");
+		textSearch.setPromptText("Full Name");
 	}
 
 	@FXML
 	public void searchName(ActionEvent event) {
-		textSearch.setText("Name");
+		textSearch.setPromptText("Name");
 	}
 
 	@FXML
 	public void searchLastName(ActionEvent event) {
-		textSearch.setText("Last Name");
+		textSearch.setPromptText("Last Name");
 	}
 
 }

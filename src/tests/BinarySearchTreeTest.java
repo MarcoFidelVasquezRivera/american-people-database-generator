@@ -1,9 +1,9 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
+import customExceptions.ElementAlreadyExistException;
 import model.BinarySearchTree;
 import model.Node;
 
@@ -11,7 +11,7 @@ class BinarySearchTreeTest {
 
 	private BinarySearchTree<Integer,Integer> tree;
 	
-	public void setup1() {
+	public void setup1() throws ElementAlreadyExistException {
 		tree = new BinarySearchTree<Integer, Integer>();
 		tree.insert(1,1);
 		tree.insert(42,42);
@@ -23,7 +23,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void insertTest() {
+	public void insertTest() throws ElementAlreadyExistException {
 		BinarySearchTree<Integer, Integer> abb = new BinarySearchTree<Integer, Integer>();
 		abb.insert(1,1);
 		Node<Integer,Integer> root = abb.getRoot();
@@ -55,7 +55,7 @@ class BinarySearchTreeTest {
 	}
 	
 	@Test
-	public void searchTest() {
+	public void searchTest() throws ElementAlreadyExistException {
 		setup1();
 		
 		int Number = tree.searchValue(1).getElement();
@@ -75,5 +75,81 @@ class BinarySearchTreeTest {
 		assertTrue(Number==6,"the search method is not working, it is not finding a value that it should find");
 	
 		assertNull(tree.searchValue(7),"the search method is not working, it is finding a value that it should not find");
+	}
+	
+	@Test
+	public void deleteTest() throws ElementAlreadyExistException {
+		setup1();
+
+		assertFalse(tree.deleteValue(0), "Tree is deleting a value it should not delete");
+
+		assertTrue(tree.deleteValue(11), "Tree is not deleting a value it should delete");
+		assertNull(tree.searchValue(11));
+
+		assertTrue(tree.deleteValue(42), "Tree is not deleting a value it should delete");
+		assertNull(tree.searchValue(42));
+		
+		assertTrue(tree.deleteValue(-23), "Tree is not deleting a value it should delete");
+		assertNull(tree.searchValue(-23));
+
+		assertTrue(tree.deleteValue(1), "Tree is not deleting a value it should delete");
+		assertNull(tree.searchValue(1));
+	}
+	
+	@Test
+	public void weightTest() throws ElementAlreadyExistException {
+		setup1();
+		assertTrue(tree.weight() == 7, "The amount of nodes was not counted properly");
+		
+		tree.insert(50, 50);
+		assertTrue(tree.weight() == 8, "The amount of nodes was not counted properly");
+		
+		tree.deleteValue(11);
+		assertTrue(tree.weight() == 7, "The amount of nodes was not counted properly");
+		
+		tree.deleteValue(50);
+		assertTrue(tree.weight() == 6, "The amount of nodes was not counted properly");
+	}
+	
+	//TODO Finish this method
+	@Test
+	public void heightTest() throws ElementAlreadyExistException {
+		setup1();
+		Node<Integer,Integer> root = tree.getRoot();
+		
+		assertTrue(tree.height() == 3);
+		
+		tree.insert(12, 12);
+		assertTrue(tree.height() == 4);
+		
+		tree.deleteValue(12);
+		assertTrue(tree.height() == 3);
+		
+		tree.deleteValue(11);
+		assertTrue(tree.height() == 2);
+		
+		tree.deleteValue(42);
+		assertTrue(root.getRight().getHeight() == 0);
+
+		tree.deleteValue(-23);
+		assertTrue(root.getLeft().getHeight() == 1);
+		
+	}
+	
+
+	@Test
+	public void maxTest() throws ElementAlreadyExistException {
+		setup1();
+		assertTrue(tree.maximumValue(tree.getRoot()).getElement() == 42, "The method did not find the proper maximum value");
+		tree.deleteValue(42);
+		assertTrue(tree.maximumValue(tree.getRoot()).getElement() == 11, "The method did not find the proper maximum value");
+	}
+	
+	@Test
+	public void minTest() throws ElementAlreadyExistException {
+		setup1();
+		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -25, "The method did not find the proper minimum value");
+		tree.deleteValue(-25);
+		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -23, "The method did not find the proper minimum value");
 	}
 }

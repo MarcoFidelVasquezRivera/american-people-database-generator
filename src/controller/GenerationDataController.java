@@ -42,7 +42,7 @@ public class GenerationDataController implements Initializable {
 
     @FXML
     void generationData(ActionEvent event) {
-//    	avlTree.generateDataOn(Integer.parseInt(nGenerate.getText()));
+//    	mc.getDatabase().generateData();
     	progressBar = new ProgressBar(0);
     	progressBar.setVisible(true);
     	progressBar.setProgress(50);
@@ -60,7 +60,7 @@ public class GenerationDataController implements Initializable {
   
 	@FXML
     void saveDataGeneration(ActionEvent event) {
-		mc.getAvlTree().getSaveData();
+//		mc.getDatabase().saveData();
     }
 
 }
