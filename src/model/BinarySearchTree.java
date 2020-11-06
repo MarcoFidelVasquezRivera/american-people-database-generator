@@ -399,4 +399,38 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 		   printHelper(root.getRight(), indent, true);
 		}
 	}
+	
+	public ArrayList<E> searchList(K key) {
+		ArrayList<E> personsList = new ArrayList<E>();
+		String skey = String.valueOf(key);
+		if(root==null) {
+			return null;
+		}else {
+			searchList(skey,root,personsList);
+		}
+		
+		
+		return personsList;
+	}
+
+	private void searchList(String key,Node<K,E> node, ArrayList<E> personsList) {
+		if(node!=null) {
+			String nodeKey = String.valueOf(node.getKey());
+			nodeKey = nodeKey.substring(0,key.length());
+			System.out.println(key+" "+nodeKey);
+			if(key.length()<nodeKey.length()) {
+				if(key.equalsIgnoreCase(nodeKey)) {
+					personsList.add(node.getElement());
+					searchList(key,node.getLeft(),personsList);
+					searchList(key,node.getRight(),personsList);
+
+				}else if(key.compareTo(nodeKey)>0) {
+					System.out.println();
+					searchList(key,node.getLeft(),personsList);
+				}else {
+					searchList(key,node.getRight(),personsList);
+				}
+			}
+		}
+	}
 }

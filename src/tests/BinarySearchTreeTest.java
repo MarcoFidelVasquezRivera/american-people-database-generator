@@ -1,11 +1,15 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import customExceptions.ElementAlreadyExistException;
 import model.BinarySearchTree;
 import model.Node;
+import model.Person;
 
 class BinarySearchTreeTest {
 
@@ -151,5 +155,31 @@ class BinarySearchTreeTest {
 		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -25, "The method did not find the proper minimum value");
 		tree.deleteValue(-25);
 		assertTrue(tree.minimumValue(tree.getRoot()).getElement() == -23, "The method did not find the proper minimum value");
+	}
+	
+	@Test
+	public void searchListTest() throws ElementAlreadyExistException {
+		BinarySearchTree<Integer, Integer> abb = new BinarySearchTree<Integer, Integer>();
+		
+		abb.insert(200, 200);
+		abb.insert(2000, 2000);
+		abb.insert(20, 20);
+		abb.insert(500, 500);
+		abb.insert(300, 300);
+		abb.insert(100, 100);
+		abb.insert(50, 50);
+		abb.insert(3200, 3200);
+		abb.insert(6200, 6200);
+		
+		ArrayList<Integer> list = abb.searchList(2);
+
+		assertTrue(list.get(0)==200,"the method is not adding to the list the 200 or is adding another one");
+		assertTrue(list.get(1)==20,"the method is not adding to the list the 20 or is adding another one");
+		assertTrue(list.get(2)==2000,"the method is not adding to the list the 2000 or is adding another one");
+		
+		list = abb.searchList(5);
+		System.out.println(list.size());
+		assertTrue(list.get(0)==500,"the method is not adding to the list the 200 or is adding another one");
+		assertTrue(list.get(1)==50,"the method is not adding to the list the 20 or is adding another one");
 	}
 }

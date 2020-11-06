@@ -89,6 +89,15 @@ public class Database {
 		treeCompleteName.insert(person, completeName);
 	}
 	
+	public void addPerson(String name, String lastName, long code, String gender, int age, int height,String date,String nationality,String completeName) throws ElementAlreadyExistException {
+		Person person = new Person(code, age, name, lastName, gender, date, height, nationality);
+		
+		treeCode.redBlackInsertion(code, person);
+		treeName.insert(person, name);
+		treeLastName.insert(person, lastName);
+		treeCompleteName.insert(person, completeName);
+	}
+	
 	public String generateName(ArrayList<String> names) {
 		Random random = new Random();
 		
