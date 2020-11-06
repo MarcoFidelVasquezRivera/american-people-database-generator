@@ -3,18 +3,18 @@ package model;
 
 public class Person {
 
-	private int code;
+	private long code;
 	private int age;
 	private String name;
 	private String lastName;
 	private String gender;
 	private String date;
-	private double height;
+	private int height;
 	private String nationality;
 	private String photography;
 
-	public Person(int code, int age, String name, String lastName, String gender, String date, double height,
-			String nationality, String photography) {
+	public Person(long code, int age, String name, String lastName, String gender, String date, int height,
+			String nationality) {
 		this.code = code;
 		this.age = age;
 		this.name = name;
@@ -23,7 +23,6 @@ public class Person {
 		this.date = date;
 		this.height = height;
 		this.nationality = nationality;
-		this.photography = photography;
 	}
 
 	public int getAge() {
@@ -34,11 +33,11 @@ public class Person {
 		this.age = age;
 	}
 
-	public int getCode() {
+	public long getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(long code) {
 		this.code = code;
 	}
 
@@ -74,11 +73,11 @@ public class Person {
 		this.date = date;
 	}
 
-	public double getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 

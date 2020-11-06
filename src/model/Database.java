@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import customExceptions.ElementAlreadyExistException;
+
 public class Database {
 	public static final int NUMBER_OF_DIGITS = 13;
 	private AVLTree<String, Person> treeName;
@@ -69,7 +71,7 @@ public class Database {
 	    return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	//datasetNames, datasetLastNames, datasetHeights, datasetCountries, datasetAges
-	public void generatePerson(ArrayList<String> dataNames,ArrayList<String> dataLastNames,ArrayList<String> dataHeights,ArrayList<String> dataCountries,ArrayList<String> dataAges) throws IOException {
+	public void generatePerson(ArrayList<String> dataNames,ArrayList<String> dataLastNames,ArrayList<String> dataHeights,ArrayList<String> dataCountries,ArrayList<String> dataAges) throws IOException, ElementAlreadyExistException {
 		String name = generateName(dataNames);
 		String lastName = generateLastName(dataLastNames);
 		long code = generateCode();
