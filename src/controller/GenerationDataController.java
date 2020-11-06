@@ -56,9 +56,7 @@ public class GenerationDataController{
     		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
     		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
     		thread.start();    	    
-    	    
-    		database.generatePeople(Integer.parseInt(nGenerate.getText()));
-		} catch (NumberFormatException | IOException e1) {
+    	  	} catch (NumberFormatException e1) {
 			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
 			a.show();
 		}

@@ -125,6 +125,7 @@ public class SearchDataController {
 	@FXML
 	public void searchCode(ActionEvent event) {
 		textSearch.setPromptText("Code");
+
 	}
 
 	@FXML
