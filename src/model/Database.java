@@ -25,7 +25,7 @@ public class Database {
 	public Database() {
 		quantityOfPeople = 0;
 	}
-
+/*
 	public void generatePeople(long nPeople) throws IOException {
 		ArrayList<String> names = new ArrayList<>();
 		ArrayList<String> lastNames = new ArrayList<>();
@@ -46,12 +46,17 @@ public class Database {
 		}
 		
 	}
-	
-	public ArrayList<String> loadData(String path) throws IOException{
+	*/
+	public ArrayList<String> loadData(String path, int linesToSkip) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(path)); 
 		ArrayList<String> data = new ArrayList<>();
+		String line = "";
 		
-		String line = br.readLine();
+		for(int i=0;i<linesToSkip;i++) {
+			line = br.readLine();
+		}
+		
+		line = br.readLine();
 		while(line!=null) {
 			line = capitalize(line);
 			data.add(line.split(",")[0]);
@@ -61,11 +66,15 @@ public class Database {
 		return data;
 	}
 	
-	public ArrayList<String> loadCompleteData(String path) throws IOException{
+	public ArrayList<String> loadCompleteData(String path, int linesToSkip) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(path)); 
 		ArrayList<String> data = new ArrayList<>();
+		String line = "";
 		
-		String line = br.readLine();
+		for(int i=0;i<linesToSkip;i++) {
+			line = br.readLine();
+		}
+		
 		line = br.readLine();
 		while(line!=null) {
 			String[] splitLine = line.split(",");
@@ -84,17 +93,37 @@ public class Database {
 	    str = str.toLowerCase();
 	    return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
-	
-	public void generatePerson(String name,String lastName) throws IOException {
+	//datasetNames, datasetLastNames, datasetHeights, datasetCountries, datasetAges
+	public void generatePerson(ArrayList<String> dataNames,ArrayList<String> dataLastNames,ArrayList<String> dataHeights,ArrayList<String> dataCountries,ArrayList<String> dataAges) throws IOException {
+		String name = generateName(dataNames);
+		String lastName = generateLastName(dataLastNames);
 		long code = generateCode();
 		String gender = generateGender();
-		int age = generateAge();
-		int height = generateHeigth(age);
+		int age = generateAge(dataAges);
+		int height = generateHeigth(age,dataHeights);
 		String birthdate = generateBirthdate(age);
 		
 		System.out.println(name+" "+lastName+" "+code+" "+gender+" "+age+" "+height);
 
 		
+	}
+	
+	public String generateName(ArrayList<String> names) {
+		Random random = new Random();
+		
+		String name = names.get(random.nextInt(names.size()));//generates the firstName
+		name = name+" "+names.get(random.nextInt(names.size()));//generates the second name
+		
+		return name;
+	}
+	
+	public String generateLastName(ArrayList<String> lastNames) {
+		Random random = new Random();
+		
+		String lastName = lastNames.get(random.nextInt(lastNames.size()));//generates the firstName
+		lastName = lastName+" "+lastNames.get(random.nextInt(lastNames.size()));//generates the second name
+		
+		return lastName;
 	}
 	
 	public String generateGender() {
@@ -138,8 +167,8 @@ public class Database {
 		return birthdate;
 	}
 	
-	public int generateAge() throws IOException {
-		ArrayList<String> agespercent = loadData("data/ages-percents.txt");
+	public int generateAge(ArrayList<String> agespercent) throws IOException {
+		//ArrayList<String> agespercent = loadData("data/ages-percents.txt");
 		Random random = new Random();
 		int number = random.nextInt(100)+1;
 		boolean ageSetted = false;
@@ -153,7 +182,6 @@ public class Database {
 			minValue = Integer.parseInt(line[0]);
 			maxValue = Integer.parseInt(line[1]);
 			percent += Double.parseDouble(line[2]);
-			System.out.println(minValue+" "+maxValue+" "+number+" "+percent);
 			
 			if(number<=percent) {
 				age = random.nextInt(maxValue-minValue)+minValue;
@@ -166,8 +194,8 @@ public class Database {
 		return age;
 	}
 	
-	public int generateHeigth(int age) throws IOException {
-		ArrayList<String> heightDistribution = loadData("data/heights.txt");
+	public int generateHeigth(int age,ArrayList<String> heightDistribution) throws IOException {
+		//ArrayList<String> heightDistribution = loadData("data/heights.txt");
 		Random random = new Random();
 		boolean heightSetted = false;
 		int counter = 0;
@@ -188,11 +216,32 @@ public class Database {
 		return height;
 	}
 	
+	public ArrayList<String> filterData(ArrayList<String> data,ArrayList<String> filter){
+		ArrayList<String> filteredData = new ArrayList<>();
+		
+		for(int i=0;i<data.size();i++) {
+			String dataLine = data.get(i).split(",")[0];
+			
+			for(int j=0;j<filter.size();i++) {
+				String filterLine = filter.get(j);
+				
+				if(dataLine.equalsIgnoreCase(filterLine)) {
+					filteredData.add(dataLine);
+				}
+			}
+			
+		}
+		
+		return filteredData;
+	}
 	
 	
-	public String generateNationality() {
+	public String generateNationality(ArrayList<String> dataCountries) {
 		return "";
 	}
 	
+	public ArrayList<String> generatePercentages(){
+		
+	}
 	
 }
