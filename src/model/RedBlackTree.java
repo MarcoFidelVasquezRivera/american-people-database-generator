@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import customExceptions.ElementAlreadyExistException;
 
 public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K, E> {
@@ -362,6 +364,36 @@ public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K
 		   System.out.println(root.getElement() + "(" + sColor + ")");
 		   printHelper(root.getLeft(), indent, false);
 		   printHelper(root.getRight(), indent, true);
+		}
+	}
+	
+	
+	public ArrayList<E> searchList(K key) {
+		ArrayList<E> personsList = new ArrayList<E>();
+		String skey = String.valueOf(key);
+		if(root==null) {
+			return null;
+		}else {
+			searchList(skey, this.root,personsList);
+		}
+		
+		
+		return personsList;
+	}
+
+	private void searchList(String key, RBTNode<K,E> node, ArrayList<E> personsList) {
+		if(node!=NIL) {
+			String nodeKey = String.valueOf(node.getKey());
+			if(key.length()<nodeKey.length()) {
+				nodeKey = nodeKey.substring(0,key.length());
+
+				if(key.equalsIgnoreCase(nodeKey)) {
+					personsList.add(node.getElement());
+				}
+			}
+			searchList(key,node.getLeft(),personsList);
+			searchList(key,node.getRight(),personsList);
+
 		}
 	}
 }

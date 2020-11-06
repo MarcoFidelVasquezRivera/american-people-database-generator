@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 import customExceptions.ElementAlreadyExistException;
@@ -169,5 +171,48 @@ class RedBlackTreeTest {
 		
 	}
 	
-	
+    @Test
+	public void searchListTest() throws ElementAlreadyExistException {
+        RedBlackTree<String, String> abb = new RedBlackTree<>("MarcoAntonioJose", null);
+
+        abb.redBlackInsertion("Mario", "Mario");
+        abb.redBlackInsertion("David", "David");
+        abb.redBlackInsertion("Camilo", "Camilo");
+        abb.redBlackInsertion("Jose", "Jose");
+        abb.redBlackInsertion("Adonai", "Adonai");
+        abb.redBlackInsertion("Anotonio", "Antonio");
+        abb.redBlackInsertion("Marco", "Marco");
+
+        ArrayList<String> list = abb.searchList("Ma");
+        System.out.println(list.size());
+        System.out.println(list.get(0));
+        System.out.println(list.get(1));
+        
+        assertTrue(list.get(0).equalsIgnoreCase("Marco"),"the method is not adding to the list the Marco or is adding another one");
+        assertTrue(list.get(1).equalsIgnoreCase("Mario"),"the method is not adding to the list the Mario or is adding another one");
+
+    }
+
+    @Test
+    public void searchListTest2() throws ElementAlreadyExistException {
+    	RedBlackTree<Integer, Integer> abb = new RedBlackTree<Integer, Integer>(-1, null);
+
+        abb.redBlackInsertion(200, 200);
+        abb.redBlackInsertion(400, 400);
+        abb.redBlackInsertion(300, 300);
+        abb.redBlackInsertion(60, 60);
+        abb.redBlackInsertion(10, 10);
+        abb.redBlackInsertion(2000, 2000);
+        abb.redBlackInsertion(800, 800);
+        abb.redBlackInsertion(90, 90);
+        abb.redBlackInsertion(500, 500);
+        abb.redBlackInsertion(20, 20);
+        
+        ArrayList<Integer> list = abb.searchList(2);
+        
+        assertTrue(list.get(0)==20,"the method is not adding to the list the 200 or is adding another one");
+        assertTrue(list.get(1)==200,"the method is not adding to the list the 20 or is adding another one");
+        assertTrue(list.get(2)==2000,"the method is not adding to the list the 2000 or is adding another one");
+
+    }
 }
