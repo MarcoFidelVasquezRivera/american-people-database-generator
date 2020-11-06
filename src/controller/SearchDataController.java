@@ -61,25 +61,25 @@ public class SearchDataController {
 		predict = new ComboBox<Person>();
 	}
 	@FXML
-	void   searchPredict(KeyEvent event) {
+	void  searchPredict(KeyEvent event) {
 		String line = textSearch.getText();
 		if (codeA) { // 1 code 2 nombre 3 apellido 4 full name
-//			listaB = mc.getDatabase().searchDataAttribute(1, line);
+			listaB = mc.getDatabase().searchList(line, 1);
 		} else if (fullNameA) {
-//			listaB = mc.getDatabase().searchDataAttribute(4 , line));
+			listaB = mc.getDatabase().searchList(line, 1);
 		} else if (nameA) {
-//			listaB = mc.getDatabase().searchDataAttribute(2 , line);
+			listaB = mc.getDatabase().searchList(line, 1);
 		} else if (lastNameA) {
-//			listaB = mc.getDatabase().searchDataAttribute(3 , line);
+			listaB = mc.getDatabase().searchList(line, 1);
 		} else if (textSearch.getText().isEmpty() && alert == false) {
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
-			alert.setTitle("Heyyy");
-			alert.setContentText("You have not selected what type of search to do!!!");
+			alert.setContentText("User has not selected search filter");
 			Optional<ButtonType> action = alert.showAndWait();
+			textSearch.setText("");
 		}
-		initload(listaB);
-		numberMatches.setText(listaB.size() + "");
+		//initload(listaB);
+		//numberMatches.setText(listaB.size() + "");
 	}
 	
 	private void initload(ArrayList<Person> listaB2) {

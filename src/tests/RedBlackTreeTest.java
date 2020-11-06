@@ -184,9 +184,6 @@ class RedBlackTreeTest {
         abb.redBlackInsertion("Marco", "Marco");
 
         ArrayList<String> list = abb.searchList("Ma");
-        System.out.println(list.size());
-        System.out.println(list.get(0));
-        System.out.println(list.get(1));
         
         assertTrue(list.get(0).equalsIgnoreCase("Marco"),"the method is not adding to the list the Marco or is adding another one");
         assertTrue(list.get(1).equalsIgnoreCase("Mario"),"the method is not adding to the list the Mario or is adding another one");
