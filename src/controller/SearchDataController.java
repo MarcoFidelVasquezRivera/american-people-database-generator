@@ -21,17 +21,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import model.Database;
 import model.Person;
 
-public class SearchDataController implements Initializable {
+public class SearchDataController {
 
 	private MenuController mc;
+	private Database database;
 	private Stage searchData;
 	public static final String CODE = "Code";
 	public static final String NAME = "Name";
 	public static final String LASTNAME = "Last Name";
 	public static final String FULL_NAME = "Full name";
 	private ArrayList<String> listaB;
+	private UpdateOrDeleteController updateOrDeleteController;
 	
 	@FXML
 	private MenuButton selecDataType;
@@ -51,13 +54,10 @@ public class SearchDataController implements Initializable {
 	@FXML
 	private TableColumn<Person, Button> columButton;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		mc = new MenuController();
-		searchData = new Stage();
-		selecDataType = new MenuButton();
-//		textSearch.setOnKeyTyped(event -> searchOption(event));
-		listaB = new ArrayList<>();
+	public SearchDataController(MenuController mc, Database database) {
+		this.mc = mc;
+		this.database = database;
+		updateOrDeleteController = new UpdateOrDeleteController(mc, database);
 	}
 
 	private void metodoA() {
@@ -100,7 +100,9 @@ public class SearchDataController implements Initializable {
 
 	@FXML
 	void searchDataBase(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/updateOrDelete.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/updateOrDelete.fxml"));
+		fxmlLoader.setController(updateOrDeleteController);
+		Parent root = fxmlLoader.load();
 		Scene scene = new Scene(root);
 		this.getSearchData().setScene(scene);
 		this.getSearchData().setTitle("Data Search");

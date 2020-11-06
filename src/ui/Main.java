@@ -19,5 +19,6 @@ public class Main extends Application{
 		primStage.setScene(scene);
 		primStage.setTitle("MDC Data Generator");
 		primStage.show();
+		primStage.setResizable(false);
 	}
 }

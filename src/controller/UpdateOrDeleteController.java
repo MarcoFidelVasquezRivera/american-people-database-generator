@@ -10,10 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.Database;
 
-public class UpdateOrDeleteController implements Initializable{
+public class UpdateOrDeleteController{
 
 	private MenuController mc;
+	private Database database;
 	private Stage updateDelete;
 	
     @FXML
@@ -42,23 +44,12 @@ public class UpdateOrDeleteController implements Initializable{
     
     @FXML
     private ImageView photoo;
-
-    @Override
-	public void initialize(URL location, ResourceBundle resources) {
-    	mc = new MenuController();
-		updateDelete = new Stage();
-//		name.setText(mc.getAvlTree().getRoot();
-		name.setText(" ");
-		gender.setText(" ");
-		dataBirth.setText(" ");
-		height.setText(" ");
-		lastName.setText(" ");
-		nationality.setText(" ");
-		code.setText("001");
-		photoo.setId(" ");
-		//edad falta
-		
+    
+    public UpdateOrDeleteController(MenuController mc, Database database) {
+		this.mc = mc;
+		this.database = database;
 	}
+
    
     @FXML //eliminarlo y volverlo a insertar con la nueva info
     void updateData(ActionEvent event) {

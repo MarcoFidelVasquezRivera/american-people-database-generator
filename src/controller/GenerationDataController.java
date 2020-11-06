@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,15 +10,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.AVLTree;
+import model.Database;
+import threads.ProgressBarThread;
 
-public class GenerationDataController implements Initializable {
+public class GenerationDataController{
 	
 	private MenuController mc;
+	private Database database;
 	private Stage generetionData;
 	
     @FXML
@@ -25,11 +31,15 @@ public class GenerationDataController implements Initializable {
 
     @FXML
     private ProgressBar progressBar;
+    
+    public GenerationDataController(MenuController mc, Database database) {
+    	this.mc = mc;
+    	this.database = database;
+    	
+    }
 
     public void initialize(URL arg0, ResourceBundle arg1) {
-		mc = new MenuController();
-		generetionData = new Stage();
-		
+		generetionData = new Stage();	
 	}
 
     public Stage getGeneretionData() {
@@ -41,27 +51,31 @@ public class GenerationDataController implements Initializable {
   	}
 
     @FXML
-    void generationData(ActionEvent event) {
-//    	mc.getDatabase().generateData();
-    	progressBar = new ProgressBar(0);
-    	progressBar.setVisible(true);
-    	progressBar.setProgress(50);
-//    	int i = 1;
-//    	try {
-//    		while(i <= 1) {
-//    		Thread.sleep(0);
-//    		progressBar.setProgress(i/100);
-//    		i += 1;
-//    		}
-//		} catch (Exception e) {
-//			System.out.println("number of people not allowed");
-//		} 
+    void generationData(ActionEvent event) throws InterruptedException {
+    	try {
+    		ProgressBarThread thread = new ProgressBarThread(this, database);
+    		thread.run();
+    	    thread.setDaemon(true);
+    	    
+    	    
+    		database.generatePeople(Integer.parseInt(nGenerate.getText()));
+		} catch (NumberFormatException | IOException e1) {
+			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
+			a.show();
+		}
     }
   
 	@FXML
-    void saveDataGeneration(ActionEvent event) {
-//		mc.getDatabase().saveData();
+    public void saveDataGeneration(ActionEvent event) {
+		//mc.getDatabase().saveData();
     }
+	
+	public ProgressBar getProgressBar() {
+		return progressBar;
+	} 
 
+	public void setProgressBar(ProgressBar toSet) {
+		progressBar = toSet;
+	}
 }
 

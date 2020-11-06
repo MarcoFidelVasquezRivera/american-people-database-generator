@@ -20,15 +20,22 @@ public class MenuController implements Initializable {
 
 	private Stage stageEscoger;
 	private Database database;
-	
+	private GenerationDataController generationDataController;
+	private SearchDataController searchDataController;
 	
 	@FXML
 	private BorderPane borderMain;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public MenuController() {
 		stageEscoger = new Stage();
 		database = new Database();
+		generationDataController = new GenerationDataController(this, database);
+		searchDataController = new SearchDataController(this, database);
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
 	}
 
 	public Stage getStageEscoger() {
@@ -49,7 +56,9 @@ public class MenuController implements Initializable {
 
 	@FXML 
 	void generationDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/ui/generationData.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/generationData.fxml"));
+		fxmlLoader.setController(generationDataController);
+		Parent root = fxmlLoader.load();
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Generation");
@@ -58,7 +67,9 @@ public class MenuController implements Initializable {
 
 	@FXML
 	void searchDataGo(ActionEvent event) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("/ui/searchDate.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/searchDate.fxml"));
+		fxmlLoader.setController(searchDataController);
+		Parent root = fxmlLoader.load();
 		Scene  scene = new Scene(root);
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Search");
