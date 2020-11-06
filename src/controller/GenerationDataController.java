@@ -52,16 +52,16 @@ public class GenerationDataController{
 
     @FXML
     void generationData(ActionEvent event) throws InterruptedException {
-//    	try {
-//    		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
-//    		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
-//    		thread.start();    	    
-//    	    
-//    		database.generatePeople(Integer.parseInt(nGenerate.getText()));
-//		} catch (NumberFormatException | IOException e1) {
-//			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
-//			a.show();
-//		}
+
+    	try {
+    		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
+    		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
+    		thread.start();    	    
+    	  	} catch (NumberFormatException e1) {
+			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
+			a.show();
+		}
+
     }
   
 	@FXML

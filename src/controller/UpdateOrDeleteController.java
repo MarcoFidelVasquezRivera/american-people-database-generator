@@ -74,7 +74,7 @@ public class UpdateOrDeleteController {
 		int codeN = person.getCode();
 		String nameN = person.getName();
 		String LastNameN = person.getLastName(); //code, age, name, lastName, gender, date, height, nationality, photography
-		Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
+//		Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
 //		mc.getDatabase().eliminar(codeN); aqui se elimina de los arboles
 //		mc.getDatabase().insertar(n); aqui se inserta el "person"	
 	}

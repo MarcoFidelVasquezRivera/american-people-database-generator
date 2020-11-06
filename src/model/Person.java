@@ -9,12 +9,12 @@ public class Person {
 	private String lastName;
 	private String gender;
 	private String date;
-	private double height;
+	private int height;
 	private String nationality;
 	private String photography;
 
-	public Person(int code, int age, String name, String lastName, String gender, String date, double height,
-			String nationality, String photography) {
+	public Person(int code, int age, String name, String lastName, String gender, String date, int height,
+			String nationality) {
 		this.code = code;
 		this.age = age;
 		this.name = name;
@@ -23,7 +23,6 @@ public class Person {
 		this.date = date;
 		this.height = height;
 		this.nationality = nationality;
-		this.photography = photography;
 	}
 
 	public int getAge() {
@@ -74,11 +73,11 @@ public class Person {
 		this.date = date;
 	}
 
-	public double getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
@@ -98,4 +97,8 @@ public class Person {
 		this.photography = photography;
 	}
 
+	public String toString() {
+		return name + "   " + lastName + "  " + gender + "    " + date + "    " + height + "      " + nationality;
+		
+	}
 }

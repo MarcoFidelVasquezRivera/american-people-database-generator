@@ -71,8 +71,8 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutX="133.0" layoutY="21.0" text="#" />
-      <TextField fx:id="textImg" layoutX="133.0" layoutY="341.0" promptText="image path " />
+      <Label fx:id="textCode" layoutX="133.0" layoutY="21.0" />
+      <TextField fx:id="textImgg" layoutX="133.0" layoutY="341.0" promptText="image path " />
       <Label layoutX="41.0" layoutY="135.0" text="Age" />
       <TextField fx:id="textAge" layoutX="133.0" layoutY="131.0" />
    </children>

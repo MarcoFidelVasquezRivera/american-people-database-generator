@@ -5,25 +5,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Random;
+
+import customExceptions.ElementAlreadyExistException;
 
 public class Database {
 	public static final int NUMBER_OF_DIGITS = 13;
-	private int quantityOfPeople;
-	/*	a randomly generated code +
-	 * 	a name +
-	 * 	last name +
-	 * 	gender +
-	 *  birthdate 
-	 *  age +
-	 *  height +
-	 *  nationality 
-	 *  and a picture and save it to the database.
-	 */
+	private AVLTree<String, Person> treeName;
+	private AVLTree<String, Person> treeLastName;
+	private AVLTree<String, Person> treeCompleteName;
+	private RedBlackTree<Long, Person> treeCode;
 	
 	public Database() {
-		quantityOfPeople = 0;
+		treeName = new AVLTree<>();
+		treeLastName = new AVLTree<>();
+		treeCompleteName = new AVLTree<>();
+		treeCode = new RedBlackTree<Long,Person>((long)-1,null);
 	}
 
 	public ArrayList<String> loadData(String path, int linesToSkip) throws IOException{
@@ -73,7 +70,7 @@ public class Database {
 	    return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	//datasetNames, datasetLastNames, datasetHeights, datasetCountries, datasetAges
-	public void generatePerson(ArrayList<String> dataNames,ArrayList<String> dataLastNames,ArrayList<String> dataHeights,ArrayList<String> dataCountries,ArrayList<String> dataAges) throws IOException {
+	public void generatePerson(ArrayList<String> dataNames,ArrayList<String> dataLastNames,ArrayList<String> dataHeights,ArrayList<String> dataCountries,ArrayList<String> dataAges) throws IOException, ElementAlreadyExistException {
 		String name = generateName(dataNames);
 		String lastName = generateLastName(dataLastNames);
 		long code = generateCode();
@@ -82,19 +79,14 @@ public class Database {
 		int height = generateHeigth(age,dataHeights);
 		String birthdate = generateBirthdate(age);
 		String nationality = generateNationality(dataCountries);
+		String completeName = name+" "+lastName;
 		
-		System.out.println("name: "+name+"\n"+
-							"lastName: "+lastName+"\n"+
-							"code: "+code+"\n"+
-							"gender: "+name+"\n"+
-							"age: "+gender+"\n"+
-							"height: "+height+"\n"+
-							"birthdate: "+birthdate+"\n"+
-							"nationality: "+nationality+"\n");
+		Person person = new Person(code, age, name, lastName, gender, birthdate, height, nationality);
 		
-		System.out.println(name+" "+lastName+" "+code+" "+gender+" "+age+" "+height);
-
-		
+		treeCode.redBlackInsertion(code, person);
+		treeName.insert(person, name);
+		treeLastName.insert(person, lastName);
+		treeCompleteName.insert(person, completeName);
 	}
 	
 	public String generateName(ArrayList<String> names) {
@@ -144,7 +136,6 @@ public class Database {
 	}
 	
 	public String generateBirthdate(int age) {
-		Calendar calendar = Calendar.getInstance();
 		Random random = new Random();
 		LocalDate ld = LocalDate.now();
 		int year = ld.getYear()-age;
@@ -209,12 +200,12 @@ public class Database {
 		ArrayList<String> filteredData = new ArrayList<>();
 		
 		for(int i=0;i<data.size();i++) {
-			String dataLine = data.get(i).split(",")[0];
-			
-			for(int j=0;j<filter.size();i++) {
+			String dataLine = data.get(i);
+			String country = dataLine.split(",")[0];
+			for(int j=0;j<filter.size();j++) {
 				String filterLine = filter.get(j);
 				
-				if(dataLine.equalsIgnoreCase(filterLine)) {
+				if(country.equalsIgnoreCase(filterLine)) {
 					filteredData.add(dataLine);
 				}
 			}
@@ -226,9 +217,8 @@ public class Database {
 	
 	
 	public String generateNationality(ArrayList<String> dataCountries) {
-		//ArrayList<String> agespercent = loadData("data/ages-percents.txt");
 		Random random = new Random();
-		int number = random.nextInt(100)+1;
+		double number = (double) random.nextInt(100)+1;
 		boolean nationalitySetted = false;
 		String nationality = "";
 		int counter = 0;
@@ -238,12 +228,12 @@ public class Database {
 			String[] line = dataCountries.get(counter).split(",");
 			String country = line[0];
 			percent += Double.parseDouble(line[2]);
-			System.out.println(number+" "+percent+" "+country);
+			//System.out.println(number+" "+percent+" "+country);
+			
 			if(number<=percent) {
 				nationality = country;
 				nationalitySetted = true;
 			}
-			
 			counter++;
 		}
 		
@@ -258,16 +248,54 @@ public class Database {
 			String countryPopulation = countries.get(i).split(",")[1];
 			population += Double.parseDouble(countryPopulation); 
 		}
-		
+
 		for(int i=0;i<countries.size();i++) {
 			String countryPopulation = countries.get(i).split(",")[1];
-			double countryPopulationPërcent = Double.parseDouble(countryPopulation)/population;
-			countryPopulationPërcent = countryPopulationPërcent*100.0;
-			newCountries.add(countries.get(i)+","+countryPopulation);
+			double countryPopulationPercent = Double.parseDouble(countryPopulation)/population;
+			countryPopulationPercent = countryPopulationPercent*100.0;
+			//System.out.println(countryPopulationPercent);
+			newCountries.add(countries.get(i)+","+countryPopulationPercent);
 			
 		}
-		
 		return newCountries;
+	}
+	
+	public void delete(long code, String name,String lastName) {
+		treeCode.delete(code);
+		treeName.delete(name);
+		treeLastName.delete(lastName);
+		treeCompleteName.delete(name+" "+lastName);
+	}
+	
+	public Person search(String key, int mode) {
+		Person person = null;
+		
+		switch(mode) {
+		case 1:
+			person = treeCode.searchValue(Long.parseLong(key)).getElement();
+			break;
+			
+		case 2:
+			person = treeName.searchValue(key).getElement();
+			break;
+			
+		case 3:
+			person = treeLastName.searchValue(key).getElement();
+			break;
+			
+		case 4:
+			person = treeCompleteName.searchValue(key).getElement();
+			break;
+		}
+		
+		
+		return person;
+	}
+
+	public ArrayList<Person> searchList(String kay,int mode){
+		
+		
+		return null;
 	}
 	
 }
