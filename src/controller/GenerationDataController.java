@@ -53,7 +53,8 @@ public class GenerationDataController{
     @FXML
     void generationData(ActionEvent event) throws InterruptedException {
     	try {
-    		ProgressBarThread thread = new ProgressBarThread(this, database);
+    		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
+    		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
     		thread.start();    	    
     	    
     		database.generatePeople(Integer.parseInt(nGenerate.getText()));
