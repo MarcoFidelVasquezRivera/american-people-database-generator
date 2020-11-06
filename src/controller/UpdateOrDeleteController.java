@@ -1,13 +1,19 @@
 package controller;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ResourceBundle;
-
+import javax.imageio.ImageIO;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Database;
@@ -56,8 +62,11 @@ public class UpdateOrDeleteController {
 	public UpdateOrDeleteController(MenuController mc, Database database, Person person) {
 		this.mc = mc;
 		this.database = database;
-		this.person = person;
+		this.person = person;	
+		photoo = new ImageView();
+		initializeImageView();
 	}
+	
 
 	public void initPerson() {
 		textName.setPromptText(person.getName());
@@ -74,15 +83,31 @@ public class UpdateOrDeleteController {
 		long codeN = person.getCode();
 		String nameN = person.getName();
 		String LastNameN = person.getLastName(); //code, age, name, lastName, gender, date, height, nationality, photography
-//		Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
-//		mc.getDatabase().eliminar(codeN); aqui se elimina de los arboles
-//		mc.getDatabase().insertar(n); aqui se inserta el "person"	
+	//	Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
+	//	mc.getDatabase().eliminar(codeN); //aqui se elimina de los arboles
+	//	mc.getDatabase().insertar(n); //aqui se inserta el "person"	
+		initializeImageView();
 	}
 
 	@FXML
 	void deleteData(ActionEvent event) {
 		// eliminar persona marco
-//		mc.getDatabase().eliminar(codeN); aqui se elimina de los arboles
+		// mc.getDatabase().eliminar(codeN); aqui se elimina de los arboles
+	}
+
+
+	public void initializeImageView() {
+		try {
+			URL url = new URL("https://thispersondoesnotexist.com/image");
+			HttpURLConnection httpcon = (HttpURLConnection) url.openConnection(); 
+	    	httpcon.addRequestProperty("User-Agent", ""); 
+	    	BufferedImage image = ImageIO.read(httpcon.getInputStream());
+	    	Image ald = SwingFXUtils.toFXImage(image,null);
+	    	photoo.setImage(ald);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		
 	}
 
 }

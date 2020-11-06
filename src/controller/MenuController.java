@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,10 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.AVLTree;
-import model.BinarySearchTree;
 import model.Database;
 
 public class MenuController implements Initializable {
@@ -26,7 +24,7 @@ public class MenuController implements Initializable {
 	@FXML
 	private BorderPane borderMain;
 
-	public MenuController() {
+	public MenuController() throws IOException{
 		stageEscoger = new Stage();
 		database = new Database();
 		generationDataController = new GenerationDataController(this, database);

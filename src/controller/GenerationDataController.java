@@ -8,8 +8,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Database;
 import threads.ProgressBarThread;
@@ -19,8 +17,6 @@ public class GenerationDataController{
 	private MenuController mc;
 	private Database database;
 	private Stage generetionData;
-    @FXML
-    private ImageView imageView;
 	
     @FXML
     private TextField nGenerate;
@@ -28,11 +24,9 @@ public class GenerationDataController{
     @FXML
     private ProgressBar progressBar;
     
-    public GenerationDataController(MenuController mc, Database database) {
+    public GenerationDataController(MenuController mc, Database database) throws IOException {
     	this.mc = mc;
     	this.database = database;
-    	imageView = new ImageView(new Image("https://thispersondoesnotexist.com/image"));
-
     }
 
     public void initialize() {}
@@ -51,12 +45,12 @@ public class GenerationDataController{
     	try {
     		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
     		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
-    		thread.start();   
-    		thread.join();
+    		thread.start();
     	  	} catch (NumberFormatException e1) {
 			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
 			a.show();
 		}
+
     }
   
 	@FXML
