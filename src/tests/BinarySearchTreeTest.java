@@ -159,27 +159,43 @@ class BinarySearchTreeTest {
 	
 	@Test
 	public void searchListTest() throws ElementAlreadyExistException {
-		BinarySearchTree<Integer, Integer> abb = new BinarySearchTree<Integer, Integer>();
+		BinarySearchTree<String, String> abb = new BinarySearchTree<>();
+		
+		abb.insert("Mario", "Mario");
+		abb.insert("David", "David");
+		abb.insert("Camilo", "Camilo");
+		abb.insert("Jose", "Jose");
+		abb.insert("Adonai", "Adonai");
+		abb.insert("Anotonio", "Antonio");
+		abb.insert("Marco", "Marco");
+		
+		ArrayList<String> list = abb.searchList("Ma");
+		
+		assertTrue(list.get(0).equalsIgnoreCase("Mario"),"the method is not adding to the list the Marco or is adding another one");
+		assertTrue(list.get(1).equalsIgnoreCase("Marco"),"the method is not adding to the list the Mario or is adding another one");
+
+	}
+	
+	@Test
+	public void searchListTest2() throws ElementAlreadyExistException {
+		BinarySearchTree<Integer, Integer> abb = new BinarySearchTree<>();
 		
 		abb.insert(200, 200);
-		abb.insert(2000, 2000);
-		abb.insert(20, 20);
-		abb.insert(500, 500);
+		abb.insert(400, 400);
 		abb.insert(300, 300);
-		abb.insert(100, 100);
-		abb.insert(50, 50);
-		abb.insert(3200, 3200);
-		abb.insert(6200, 6200);
-		
-		ArrayList<Integer> list = abb.searchList(2);
+		abb.insert(60, 60);
+		abb.insert(10, 10);
+		abb.insert(2000, 2000);
+		abb.insert(800, 800);
+		abb.insert(90, 90);
+		abb.insert(500, 500);
+		abb.insert(20, 20);
 
+		ArrayList<Integer> list = abb.searchList(2);
+		
 		assertTrue(list.get(0)==200,"the method is not adding to the list the 200 or is adding another one");
 		assertTrue(list.get(1)==20,"the method is not adding to the list the 20 or is adding another one");
 		assertTrue(list.get(2)==2000,"the method is not adding to the list the 2000 or is adding another one");
-		
-		list = abb.searchList(5);
-		System.out.println(list.size());
-		assertTrue(list.get(0)==500,"the method is not adding to the list the 200 or is adding another one");
-		assertTrue(list.get(1)==50,"the method is not adding to the list the 20 or is adding another one");
+
 	}
 }
