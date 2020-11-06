@@ -97,4 +97,8 @@ public class Person {
 		this.photography = photography;
 	}
 
+	public String toString() {
+		return name + "   " + lastName + "  " + gender + "    " + date + "    " + height + "      " + nationality;
+		
+	}
 }

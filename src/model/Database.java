@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Random;
 
 import customExceptions.ElementAlreadyExistException;
@@ -88,7 +87,6 @@ public class Database {
 		treeName.insert(person, name);
 		treeLastName.insert(person, lastName);
 		treeCompleteName.insert(person, completeName);
-	
 	}
 	
 	public String generateName(ArrayList<String> names) {
@@ -138,7 +136,6 @@ public class Database {
 	}
 	
 	public String generateBirthdate(int age) {
-		Calendar calendar = Calendar.getInstance();
 		Random random = new Random();
 		LocalDate ld = LocalDate.now();
 		int year = ld.getYear()-age;
@@ -292,7 +289,7 @@ public class Database {
 		}
 		
 		
-		return null;
+		return person;
 	}
 
 	public ArrayList<Person> searchList(String kay,int mode){

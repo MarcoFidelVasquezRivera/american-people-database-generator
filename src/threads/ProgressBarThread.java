@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import controller.GenerationDataController;
+import customExceptions.ElementAlreadyExistException;
 import javafx.application.Platform;
 import model.Database;
 
@@ -52,10 +53,9 @@ public class ProgressBarThread extends Thread{
 			
 			try {
 				database.generatePerson(dataNames, dataLastNames, dataHeights, dataCountries, dataAges);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				
+			} catch (IOException | ElementAlreadyExistException e1) {}
+			i += toAdd;
 			Platform.runLater(new Thread() {
 				@Override
 				public void run() {
@@ -63,13 +63,6 @@ public class ProgressBarThread extends Thread{
 				}
 			});
 			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				System.out.println("Thread is dead");
-			}
-			
-			i += toAdd;
 		}
 		
 	}
