@@ -1,22 +1,16 @@
 package controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import java.net.MalformedURLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.AVLTree;
 import model.Database;
 import threads.ProgressBarThread;
 
@@ -25,6 +19,8 @@ public class GenerationDataController{
 	private MenuController mc;
 	private Database database;
 	private Stage generetionData;
+    @FXML
+    private ImageView imageView;
 	
     @FXML
     private TextField nGenerate;
@@ -35,12 +31,11 @@ public class GenerationDataController{
     public GenerationDataController(MenuController mc, Database database) {
     	this.mc = mc;
     	this.database = database;
-    	
+    	imageView = new ImageView(new Image("https://thispersondoesnotexist.com/image"));
+
     }
 
-    public void initialize(URL arg0, ResourceBundle arg1) {
-		generetionData = new Stage();	
-	}
+    public void initialize() {}
 
     public Stage getGeneretionData() {
   		return generetionData;
@@ -51,17 +46,17 @@ public class GenerationDataController{
   	}
 
     @FXML
-    void generationData(ActionEvent event) throws InterruptedException {
+    void generationData(ActionEvent event) throws InterruptedException, MalformedURLException, IOException {
 
     	try {
     		int peopleToGenerate = Integer.parseInt(nGenerate.getText());
     		ProgressBarThread thread = new ProgressBarThread(this, database, peopleToGenerate);
-    		thread.start();    	    
+    		thread.start();   
+    		thread.join();
     	  	} catch (NumberFormatException e1) {
 			Alert a = new Alert(AlertType.WARNING, "Input is not a number");
 			a.show();
 		}
-
     }
   
 	@FXML

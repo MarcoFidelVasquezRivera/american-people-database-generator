@@ -11,7 +11,6 @@ public class Person {
 	private String date;
 	private double height;
 	private String nationality;
-	private String photography;
 
 	public Person(long code, int age, String name, String lastName, String gender, String date, double height,
 			String nationality) {
@@ -23,7 +22,6 @@ public class Person {
 		this.date = date;
 		this.height = height;
 		this.nationality = nationality;
-		this.photography = photography;
 	}
 
 	public int getAge() {
@@ -88,14 +86,6 @@ public class Person {
 
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
-	}
-
-	public String getPhotography() {
-		return photography;
-	}
-
-	public void setPhotography(String photography) {
-		this.photography = photography;
 	}
 
 }
