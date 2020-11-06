@@ -17,24 +17,24 @@ public class ProgressBarThread extends Thread{
 	}
 
 	@Override
-	public void run() {
-		while(i<1.0) {
-
+	public void run() {		
+		while(i < 1.0) {
 			
-			Platform.runLater(new Runnable() {
+			
+			Platform.runLater(new Thread() {
 				@Override
 				public void run() {
-					controller.getProgressBar().setProgress(i);
+					controller.setProgressBar(i);
 				}
 			});
 			
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				System.out.println("Thread is dead");
 			}
 			
-			i += 0.01;
+			i += ;
 		}
 		
 	}

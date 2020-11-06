@@ -54,9 +54,7 @@ public class GenerationDataController{
     void generationData(ActionEvent event) throws InterruptedException {
     	try {
     		ProgressBarThread thread = new ProgressBarThread(this, database);
-    		thread.run();
-    	    thread.setDaemon(true);
-    	    
+    		thread.start();    	    
     	    
     		database.generatePeople(Integer.parseInt(nGenerate.getText()));
 		} catch (NumberFormatException | IOException e1) {
@@ -74,8 +72,8 @@ public class GenerationDataController{
 		return progressBar;
 	} 
 
-	public void setProgressBar(ProgressBar toSet) {
-		progressBar = toSet;
+	public void setProgressBar(double i) {
+		progressBar.setProgress(i);
 	}
 }
 
