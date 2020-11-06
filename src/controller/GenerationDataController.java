@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.AVLTree;
 
 public class GenerationDataController implements Initializable {
 	
@@ -23,9 +24,6 @@ public class GenerationDataController implements Initializable {
     private TextField nGenerate;
 
     @FXML
-    private Label textNotification;
-
-    @FXML
     private ProgressBar progressBar;
 
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -33,23 +31,36 @@ public class GenerationDataController implements Initializable {
 		generetionData = new Stage();
 		
 	}
-    
-    @FXML
-    void generationData(ActionEvent event) {
-    	
-    }
 
     public Stage getGeneretionData() {
-		return generetionData;
-	}
+  		return generetionData;
+  	}
 
-	public void setGeneretionData(Stage generetionData) {
-		this.generetionData = generetionData;
-	}
+  	public void setGeneretionData(Stage generetionData) {
+  		this.generetionData = generetionData;
+  	}
 
+    @FXML
+    void generationData(ActionEvent event) {
+//    	mc.getDatabase().generateData();
+    	progressBar = new ProgressBar(0);
+    	progressBar.setVisible(true);
+    	progressBar.setProgress(50);
+//    	int i = 1;
+//    	try {
+//    		while(i <= 1) {
+//    		Thread.sleep(0);
+//    		progressBar.setProgress(i/100);
+//    		i += 1;
+//    		}
+//		} catch (Exception e) {
+//			System.out.println("number of people not allowed");
+//		} 
+    }
+  
 	@FXML
     void saveDataGeneration(ActionEvent event) {
-
+//		mc.getDatabase().saveData();
     }
 
 }

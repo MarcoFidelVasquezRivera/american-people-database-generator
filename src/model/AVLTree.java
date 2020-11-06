@@ -1,6 +1,9 @@
 package model;
 
+
+import java.util.ArrayList;
 import customExceptions.ElementAlreadyExistException;
+
 
 public class AVLTree<K extends Comparable<K>,E> extends BinarySearchTree <K,E> {
 	

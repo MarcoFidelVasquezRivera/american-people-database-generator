@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class UpdateOrDeleteController implements Initializable{
@@ -38,30 +39,47 @@ public class UpdateOrDeleteController implements Initializable{
 
     @FXML
     private TextField photo;
+    
+    @FXML
+    private ImageView photoo;
 
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
     	mc = new MenuController();
 		updateDelete = new Stage();
+//		name.setText(mc.getAvlTree().getRoot();
+		name.setText(" ");
+		gender.setText(" ");
+		dataBirth.setText(" ");
+		height.setText(" ");
+		lastName.setText(" ");
+		nationality.setText(" ");
+		code.setText("001");
+		photoo.setId(" ");
+		//edad falta
+		
 	}
+   
+    @FXML //eliminarlo y volverlo a insertar con la nueva info
+    void updateData(ActionEvent event) {
+    	int codeN = Integer.parseInt(code.getText());
+    	String nameN = name.getText();
+    	String LastNameN = lastName.getText();
+//     	mc.getDatabase().updatePerson();
+//    	mc.person.setName(name.getText());
+//		person.setGender(gender.getText());
+//		person.setDate(dataBirth.getText());
+//		person.setHeight(height.getText());
+//		person.setLastName(lastName.getText());
+//		person.setNationality(nationality.getText());
+//    	load();
+    }
     
     @FXML
     void deleteData(ActionEvent event) {
-
+    	// eliminar persona marco
+//    	mc.getDatabase().deletePerson("llave");
     }
-
-    @FXML
-    void menuMainBack(ActionEvent event) throws Exception {
-    	updateDelete.close();
-		mc.getMain().start(mc.getStageEscoger());
-    }
-
-    @FXML
-    void updateData(ActionEvent event) {
-
-    }
-
 	
-
 }
 

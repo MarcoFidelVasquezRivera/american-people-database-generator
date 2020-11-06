@@ -1,14 +1,11 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class Database {
@@ -55,7 +52,6 @@ public class Database {
 		ArrayList<String> data = new ArrayList<>();
 		
 		String line = br.readLine();
-		line = br.readLine();
 		while(line!=null) {
 			line = capitalize(line);
 			data.add(line.split(",")[0]);
@@ -74,7 +70,6 @@ public class Database {
 		while(line!=null) {
 			String[] splitLine = line.split(",");
 			line = capitalize(splitLine[0]+","+splitLine[1]);
-			System.out.println(line);
 			data.add(line);
 			line = br.readLine();
 		}
@@ -158,7 +153,7 @@ public class Database {
 			minValue = Integer.parseInt(line[0]);
 			maxValue = Integer.parseInt(line[1]);
 			percent += Double.parseDouble(line[2]);
-			//System.out.println(minValue+" "+maxValue+" "+number+" "+percent);
+			System.out.println(minValue+" "+maxValue+" "+number+" "+percent);
 			
 			if(number<=percent) {
 				age = random.nextInt(maxValue-minValue)+minValue;

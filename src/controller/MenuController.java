@@ -12,28 +12,23 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ui.Main;
+import model.AVLTree;
+import model.BinarySearchTree;
+import model.Database;
 
 public class MenuController implements Initializable {
 
-	private static Main main;
 	private Stage stageEscoger;
-
+	private Database database;
+	
+	
 	@FXML
 	private BorderPane borderMain;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		main = new Main();
 		stageEscoger = new Stage();
-	}
-
-	public static Main getMain() {
-		return main;
-	}
-
-	public static void setMain(Main main) {
-		MenuController.main = main;
+		database = new Database();
 	}
 
 	public Stage getStageEscoger() {
@@ -42,6 +37,14 @@ public class MenuController implements Initializable {
 
 	public void setStageEscoger(Stage stageEscoger) {
 		this.stageEscoger = stageEscoger;
+	}
+
+	public Database getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(Database database) {
+		this.database = database;
 	}
 
 	@FXML 
