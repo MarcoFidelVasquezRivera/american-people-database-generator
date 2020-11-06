@@ -71,7 +71,7 @@ public class UpdateOrDeleteController {
 
 	@FXML // eliminarlo y volverlo a insertar con la nueva info
 	void updateData(ActionEvent event) {
-		int codeN = person.getCode();
+		long codeN = person.getCode();
 		String nameN = person.getName();
 		String LastNameN = person.getLastName(); //code, age, name, lastName, gender, date, height, nationality, photography
 //		Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
