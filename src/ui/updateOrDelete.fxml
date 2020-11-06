@@ -25,37 +25,37 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="136.0" text="Gender">
+      <Label layoutX="34.0" layoutY="178.0" text="Gender">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="173.0" text="Date of birth">
+      <Label layoutX="36.0" layoutY="218.0" text="Date of birth">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="209.0" text="Height">
+      <Label layoutX="36.0" layoutY="258.0" text="Height">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="253.0" text="Nationality">
+      <Label layoutX="28.0" layoutY="300.0" text="Nationality">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="304.0" text="Photography">
+      <Label layoutX="31.0" layoutY="344.0" text="Photography">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="133.0" layoutY="53.0" />
-      <TextField layoutX="133.0" layoutY="93.0" />
-      <TextField layoutX="133.0" layoutY="132.0" />
-      <TextField layoutX="133.0" layoutY="169.0" />
-      <TextField layoutX="133.0" layoutY="205.0" />
-      <TextField layoutX="133.0" layoutY="249.0" />
+      <TextField fx:id="textName" layoutX="133.0" layoutY="53.0" />
+      <TextField fx:id="textLastName" layoutX="133.0" layoutY="93.0" />
+      <TextField fx:id="textGender" layoutX="133.0" layoutY="176.0" />
+      <TextField fx:id="textDate" layoutX="133.0" layoutY="215.0" />
+      <TextField fx:id="textHeight" layoutX="133.0" layoutY="255.0" />
+      <TextField fx:id="textNationality" layoutX="133.0" layoutY="297.0" />
       <ImageView fx:id="photoo" fitHeight="245.0" fitWidth="258.0" layoutX="133.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../data/el-pepe.jpg" />
@@ -71,7 +71,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label layoutX="133.0" layoutY="21.0" text="#" />
-      <TextField layoutX="133.0" layoutY="302.0" promptText="image path " />
+      <Label fx:id="textCode" layoutX="133.0" layoutY="21.0" />
+      <TextField fx:id="textImgg" layoutX="133.0" layoutY="341.0" promptText="image path " />
+      <Label layoutX="41.0" layoutY="135.0" text="Age" />
+      <TextField fx:id="textAge" layoutX="133.0" layoutY="131.0" />
    </children>
 </AnchorPane>

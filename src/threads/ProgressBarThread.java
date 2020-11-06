@@ -24,7 +24,7 @@ public class ProgressBarThread extends Thread{
 		while(i < 1.0) {
 			
 			
-			database.generatePerson(datasetNames, datasetLastNames, datasetHeights, datasetCountries, datasetAges);
+//			database.generatePerson(datasetNames, datasetLastNames, datasetHeights, datasetCountries, datasetAges);
 			Platform.runLater(new Thread() {
 				@Override
 				public void run() {
