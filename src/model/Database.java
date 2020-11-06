@@ -25,28 +25,7 @@ public class Database {
 	public Database() {
 		quantityOfPeople = 0;
 	}
-/*
-	public void generatePeople(long nPeople) throws IOException {
-		ArrayList<String> names = new ArrayList<>();
-		ArrayList<String> lastNames = new ArrayList<>();
-		Random random = new Random();
-		
-		names = loadData("data/babynames-clean.csv");
-		lastNames = loadData("data/Names_2010Census.csv");
-		loadCompleteData("data/population_by_country_2020.csv");
-		
-		for(long i=0;i<nPeople;i++) {
-			String name = names.get(random.nextInt(names.size()));//generates the firstName
-			name = name+" "+names.get(random.nextInt(names.size()));//generates the second name
-			
-			String lastName = lastNames.get(random.nextInt(lastNames.size()));//generates the firstName
-			lastName = lastName+" "+lastNames.get(random.nextInt(lastNames.size()));//generates the second name
-			
-			generatePerson(name,lastName);
-		}
-		
-	}
-	*/
+
 	public ArrayList<String> loadData(String path, int linesToSkip) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(path)); 
 		ArrayList<String> data = new ArrayList<>();
@@ -102,6 +81,16 @@ public class Database {
 		int age = generateAge(dataAges);
 		int height = generateHeigth(age,dataHeights);
 		String birthdate = generateBirthdate(age);
+		String nationality = generateNationality(dataCountries);
+		
+		System.out.println("name: "+name+"\n"+
+							"lastName: "+lastName+"\n"+
+							"code: "+code+"\n"+
+							"gender: "+name+"\n"+
+							"age: "+gender+"\n"+
+							"height: "+height+"\n"+
+							"birthdate: "+birthdate+"\n"+
+							"nationality: "+nationality+"\n");
 		
 		System.out.println(name+" "+lastName+" "+code+" "+gender+" "+age+" "+height);
 
@@ -237,11 +226,48 @@ public class Database {
 	
 	
 	public String generateNationality(ArrayList<String> dataCountries) {
-		return "";
+		//ArrayList<String> agespercent = loadData("data/ages-percents.txt");
+		Random random = new Random();
+		int number = random.nextInt(100)+1;
+		boolean nationalitySetted = false;
+		String nationality = "";
+		int counter = 0;
+		double percent = 0.0;
+		
+		while(!nationalitySetted) {
+			String[] line = dataCountries.get(counter).split(",");
+			String country = line[0];
+			percent += Double.parseDouble(line[2]);
+			System.out.println(number+" "+percent+" "+country);
+			if(number<=percent) {
+				nationality = country;
+				nationalitySetted = true;
+			}
+			
+			counter++;
+		}
+		
+		return nationality;
 	}
 	
-	public ArrayList<String> generatePercentages(){
+	public ArrayList<String> generatePercentages(ArrayList<String> countries){
+		ArrayList<String> newCountries = new ArrayList<String>();
+		double population = 0;
 		
+		for(int i=0;i<countries.size();i++) {
+			String countryPopulation = countries.get(i).split(",")[1];
+			population += Double.parseDouble(countryPopulation); 
+		}
+		
+		for(int i=0;i<countries.size();i++) {
+			String countryPopulation = countries.get(i).split(",")[1];
+			double countryPopulationPërcent = Double.parseDouble(countryPopulation)/population;
+			countryPopulationPërcent = countryPopulationPërcent*100.0;
+			newCountries.add(countries.get(i)+","+countryPopulation);
+			
+		}
+		
+		return newCountries;
 	}
 	
 }
