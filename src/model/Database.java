@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Random;
 
 public class Database {
 	public static final int NUMBER_OF_DIGITS = 13;
+	private int quantityOfPeople;
 	/*	a randomly generated code +
 	 * 	a name +
 	 * 	last name +
@@ -24,7 +26,7 @@ public class Database {
 	 */
 	
 	public Database() {
-		
+		quantityOfPeople = 0;
 	}
 
 	public void generatePeople(long nPeople) throws IOException {
@@ -33,7 +35,8 @@ public class Database {
 		Random random = new Random();
 		
 		names = loadData("data/babynames-clean.csv");
-		lastNames = names = loadData("data/Names_2010Census.csv");
+		lastNames = loadData("data/Names_2010Census.csv");
+		loadCompleteData("data/population_by_country_2020.csv");
 		
 		for(long i=0;i<nPeople;i++) {
 			String name = names.get(random.nextInt(names.size()));//generates the firstName
@@ -44,8 +47,6 @@ public class Database {
 			
 			generatePerson(name,lastName);
 		}
-
-
 		
 	}
 	
@@ -54,9 +55,27 @@ public class Database {
 		ArrayList<String> data = new ArrayList<>();
 		
 		String line = br.readLine();
+		line = br.readLine();
 		while(line!=null) {
 			line = capitalize(line);
 			data.add(line.split(",")[0]);
+			line = br.readLine();
+		}
+		
+		return data;
+	}
+	
+	public ArrayList<String> loadCompleteData(String path) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(path)); 
+		ArrayList<String> data = new ArrayList<>();
+		
+		String line = br.readLine();
+		line = br.readLine();
+		while(line!=null) {
+			String[] splitLine = line.split(",");
+			line = capitalize(splitLine[0]+","+splitLine[1]);
+			System.out.println(line);
+			data.add(line);
 			line = br.readLine();
 		}
 		
@@ -75,11 +94,12 @@ public class Database {
 		long code = generateCode();
 		String gender = generateGender();
 		int age = generateAge();
+		int height = generateHeigth(age);
+		String birthdate = generateBirthdate(age);
 		
-		System.out.println(name+" "+lastName+" "+code+" "+gender+" "+age);
+		System.out.println(name+" "+lastName+" "+code+" "+gender+" "+age+" "+height);
 
 		
-	
 	}
 	
 	public String generateGender() {
@@ -110,12 +130,17 @@ public class Database {
 		return Long.parseLong(codeString);
 	}
 	
-	public Date generateBirthdate() {
-		Calendar cl = new GregorianCalendar();
+	public String generateBirthdate(int age) {
+		Calendar calendar = Calendar.getInstance();
+		Random random = new Random();
+		LocalDate ld = LocalDate.now();
+		int year = ld.getYear()-age;
+		int month = random.nextInt(ld.getMonthValue())+1;
+		int day = random.nextInt(29)+1;
 		
+		String birthdate = String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
 		
-		
-		return null;
+		return birthdate;
 	}
 	
 	public int generateAge() throws IOException {
@@ -135,7 +160,7 @@ public class Database {
 			percent += Double.parseDouble(line[2]);
 			//System.out.println(minValue+" "+maxValue+" "+number+" "+percent);
 			
-			if(number<percent) {
+			if(number<=percent) {
 				age = random.nextInt(maxValue-minValue)+minValue;
 				ageSetted = true;
 			}
@@ -145,6 +170,30 @@ public class Database {
 		
 		return age;
 	}
+	
+	public int generateHeigth(int age) throws IOException {
+		ArrayList<String> heightDistribution = loadData("data/heights.txt");
+		Random random = new Random();
+		boolean heightSetted = false;
+		int counter = 0;
+		int height = 0;
+		
+		while(!heightSetted) {
+			String[] line = heightDistribution.get(counter).split("-");
+			int maxAge = Integer.parseInt(line[0]);
+			int minValue = Integer.parseInt(line[1]);
+			int maxValue = Integer.parseInt(line[2]);
+			
+			if(age<=maxAge) {
+				height = random.nextInt(maxValue-minValue)+minValue;
+				heightSetted = true;
+			}
+			counter++;
+		}
+		return height;
+	}
+	
+	
 	
 	public String generateNationality() {
 		return "";
