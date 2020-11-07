@@ -302,9 +302,26 @@ public class Database {
 	}
 
 	public ArrayList<Person> searchList(String kay,int mode){
+		ArrayList<Person> person = new ArrayList<>();
+		switch(mode) {
+		case 1:
+			person = treeCode.searchList(Long.parseLong(kay));
+			break;
+			
+		case 2:
+			person = treeName.searchList(kay);
+			break;
+			
+		case 3:
+			person = treeLastName.searchList(kay);
+			break;
+			
+		case 4:
+			person = treeCompleteName.searchList(kay);
+			break;
+		}
 		
-		
-		return null;
+		return person;
 	}
 	
 }
