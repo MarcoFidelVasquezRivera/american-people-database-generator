@@ -55,6 +55,7 @@ public class SearchDataController {
 	private ComboBox<String> predict;
 	
 	private PredictionThread thread;
+	
 
 	public SearchDataController(MenuController mc, Database database) {
 		searchData = new Stage();
@@ -72,8 +73,8 @@ public class SearchDataController {
 	
 	public void initialize() {
 		if(thread == null) {
-		thread = new PredictionThread(this,database);
-		thread.start();
+			thread = new PredictionThread(this,database);
+			thread.start();
 		}
 	}
 	
@@ -115,6 +116,7 @@ public class SearchDataController {
 
 	@FXML
 	void loadUpdate(ActionEvent event) throws IOException {
+
 		try {
 			int option = 0;
 			if(((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("code")) {
@@ -190,4 +192,5 @@ public class SearchDataController {
 			return "";
 		}else return (((RadioButton) mode.getSelectedToggle()).getText());
 	}
+	
 }

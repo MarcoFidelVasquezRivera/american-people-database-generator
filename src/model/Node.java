@@ -1,6 +1,9 @@
 package model;
 
-public class Node<K extends Comparable<K>, E>{
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Node<K extends Comparable<K>, E> implements Serializable{
 
 	private E element;
 	private K key;

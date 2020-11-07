@@ -3,24 +3,28 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
 import customExceptions.ElementAlreadyExistException;
 
-public class Database {
+@SuppressWarnings("serial")
+public class Database implements Serializable{
 	public static final int NUMBER_OF_DIGITS = 13;
 	private AVLTree<String, Person> treeName;
 	private AVLTree<String, Person> treeLastName;
 	private AVLTree<String, Person> treeCompleteName;
 	private RedBlackTree<Long, Person> treeCode;
+	private ArrayList<Person> persons;
 	
 	public Database() {
 		treeName = new AVLTree<>();
 		treeLastName = new AVLTree<>();
 		treeCompleteName = new AVLTree<>();
 		treeCode = new RedBlackTree<Long,Person>((long)-1,null);
+		persons = new ArrayList<Person>();
 	}
 
 	public ArrayList<String> loadData(String path, int linesToSkip) throws IOException{
@@ -83,12 +87,29 @@ public class Database {
 		
 		Person person = new Person(code, age, name, lastName, gender, birthdate, height, nationality);
 		
-		treeCode.redBlackInsertion(code, person);
-		treeName.insert(person, name);
-		treeLastName.insert(person, lastName);
-		treeCompleteName.insert(person, completeName);
+		persons.add(person);
+
 	}
 	
+	public void save() {
+		try {
+			for(int i=0;i<persons.size();i++) {
+				Person currentPerson = persons.get(i);
+
+				treeCode.redBlackInsertion(currentPerson.getCode(), currentPerson);
+				treeName.insert(currentPerson, currentPerson.getName());
+				treeLastName.insert(currentPerson, currentPerson.getLastName());
+				String fullName = currentPerson.getName()+" "+currentPerson.getLastName();
+				treeCompleteName.insert(currentPerson, fullName);
+
+			}
+			persons.clear();
+		} catch (ElementAlreadyExistException e) {
+
+		}
+
+	}
+
 	public void addPerson(String name, String lastName, long code, String gender, int age, int height,String date,String nationality,String completeName) throws ElementAlreadyExistException {
 		Person person = new Person(code, age, name, lastName, gender, date, height, nationality);
 		

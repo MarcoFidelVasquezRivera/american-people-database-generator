@@ -1,6 +1,10 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,9 +28,9 @@ public class MenuController implements Initializable {
 	@FXML
 	private BorderPane borderMain;
 
-	public MenuController() throws IOException{
+	public MenuController(Database db) throws IOException{
 		stageEscoger = new Stage();
-		database = new Database();
+		database = db;
 		generationDataController = new GenerationDataController(this, database);
 		searchDataController = new SearchDataController(this, database);
 	}
@@ -74,5 +78,5 @@ public class MenuController implements Initializable {
 		this.getStageEscoger().show();
 		
 	}
-
+	
 }

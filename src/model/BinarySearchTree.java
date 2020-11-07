@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import customExceptions.ElementAlreadyExistException;
 
 
-public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearchTree<K, E> {
+@SuppressWarnings("serial")
+public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearchTree<K, E>,Serializable{
 	private Node<K,E> root;
 	private int weight;
 	

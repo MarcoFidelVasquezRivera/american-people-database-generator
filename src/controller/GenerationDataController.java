@@ -55,7 +55,7 @@ public class GenerationDataController{
   
 	@FXML
     public void saveDataGeneration(ActionEvent event) {
-		//mc.getDatabase().saveData();
+		mc.getDatabase().save();
     }
 	
 	public ProgressBar getProgressBar() {

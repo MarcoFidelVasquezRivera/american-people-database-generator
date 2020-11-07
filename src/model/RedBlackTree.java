@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import customExceptions.ElementAlreadyExistException;
 
-public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K, E> {
+@SuppressWarnings("serial")
+public class RedBlackTree<K extends Comparable<K>, E> extends BinarySearchTree<K, E> implements Serializable {
 
 	public static final boolean RED = true;
 	public static final boolean BLACK = false;

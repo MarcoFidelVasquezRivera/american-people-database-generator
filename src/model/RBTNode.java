@@ -1,6 +1,9 @@
 package model;
 
-public class RBTNode<K extends Comparable<K>, E> extends Node<K ,E> {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class RBTNode<K extends Comparable<K>, E> extends Node<K ,E> implements Serializable{
 
 	private RBTNode<K,E> parent;
 	private RBTNode<K,E> left;
