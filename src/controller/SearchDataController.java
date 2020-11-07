@@ -115,15 +115,33 @@ public class SearchDataController {
 
 	@FXML
 	void loadUpdate(ActionEvent event) throws IOException {
-		Person n = database.search(predict.getSelectionModel().getSelectedItem(), 1);
-		updateOrDeleteController = new UpdateOrDeleteController(mc, database, n);
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/updateOrDelete.fxml"));
-		fxmlLoader.setController(updateOrDeleteController);
-		Parent root = fxmlLoader.load();
-		Scene scene = new Scene(root);
-		this.getSearchData().setScene(scene);
-		this.getSearchData().setTitle("Data Search");
-		this.getSearchData().show();
+		try {
+			int option = 0;
+			if(((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("code")) {
+				option = 1;
+			}else if(((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("name")) {
+				option = 2;
+			}else if(((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("last name")) {
+				option = 3;
+			}else if(((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("full name")) {
+				option = 4;
+			}
+			Person n = null;
+
+			n = database.search(predict.getSelectionModel().getSelectedItem(), option);
+
+
+			updateOrDeleteController = new UpdateOrDeleteController(mc, database, n);
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/updateOrDelete.fxml"));
+			fxmlLoader.setController(updateOrDeleteController);
+			Parent root = fxmlLoader.load();
+			Scene scene = new Scene(root);
+			this.getSearchData().setScene(scene);
+			this.getSearchData().setTitle("Data Search");
+			this.getSearchData().show();
+		}catch(Exception e) {
+
+		}
 	}
 
 	public Stage getSearchData() {

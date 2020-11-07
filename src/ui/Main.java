@@ -1,10 +1,15 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application{
 	
@@ -20,5 +25,13 @@ public class Main extends Application{
 		primStage.setTitle("MDC Data Generator");
 		primStage.show();
 		primStage.setResizable(false);
+		
+		primStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent t) {
+		        Platform.exit();
+		        System.exit(0);
+		    }
+		});
 	}
 }

@@ -69,16 +69,17 @@ public class UpdateOrDeleteController {
 	
 	public void initialize() {
 		initializeImageView();
+		initPerson();
 	}
 	
 	public void initPerson() {
-		textName.setPromptText(person.getName());
-		textLastName.setPromptText(person.getLastName());
-		textGender.setPromptText(person.getGender());
-		textDate.setPromptText(person.getDate());
-		textHeight.setPromptText(person.getHeight() + "");
-		textNationality.setPromptText(person.getNationality());
-		textAge.setPromptText(person.getAge() + "");
+		textName.setText(person.getName());
+		textLastName.setText(person.getLastName());
+		textGender.setText(person.getGender());
+		textDate.setText(person.getDate());
+		textHeight.setText(person.getHeight() + "");
+		textNationality.setText(person.getNationality());
+		textAge.setText(person.getAge() + "");
 	}
 
 	@FXML // eliminarlo y volverlo a insertar con la nueva info
