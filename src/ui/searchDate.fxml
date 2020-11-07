@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -15,16 +15,16 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <MenuButton fx:id="selecDataType" layoutX="197.0" layoutY="39.0" mnemonicParsing="false" text="Selection the option">
-        <items>
-          <MenuItem mnemonicParsing="false" onAction="#searchName" text="Name" />
-          <MenuItem mnemonicParsing="false" onAction="#searchLastName" text="Last Name" />
-            <MenuItem mnemonicParsing="false" onAction="#searchFull" text="Full Name" />
-            <MenuItem mnemonicParsing="false" onAction="#searchCode" text="Code" />
-        </items>
-      </MenuButton>
       <Label fx:id="numberMatches" layoutX="260.0" layoutY="80.0" prefHeight="20.0" prefWidth="14.0" text="#" />
       <TextField fx:id="textSearch" layoutX="72.0" layoutY="77.0" onKeyTyped="#searchPredict" prefHeight="25.0" prefWidth="168.0" promptText="Search Data" />
       <ComboBox fx:id="predict" layoutX="72.0" layoutY="102.0" onAction="#loadUpdate" prefHeight="25.0" prefWidth="168.0" />
+      <RadioButton layoutX="282.0" layoutY="44.0" mnemonicParsing="false" text="Code">
+         <toggleGroup>
+            <ToggleGroup fx:id="mode" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="281.0" layoutY="62.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="77.0" text="Name" toggleGroup="$mode" />
+      <RadioButton layoutX="281.0" layoutY="82.0" mnemonicParsing="false" text="Last Name" toggleGroup="$mode" />
+      <RadioButton layoutX="281.0" layoutY="106.0" mnemonicParsing="false" text="Full Name" toggleGroup="$mode" />
    </children>
 </AnchorPane>

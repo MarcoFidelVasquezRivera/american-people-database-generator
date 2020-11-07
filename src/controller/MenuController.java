@@ -72,6 +72,7 @@ public class MenuController implements Initializable {
 		this.getStageEscoger().setScene(scene);
 		this.getStageEscoger().setTitle("Data Search");
 		this.getStageEscoger().show();
+		
 	}
 
 }
