@@ -68,12 +68,13 @@ public class SearchDataController {
 		alert = false;
 		listaB = new ArrayList<>();
 		predict = new ComboBox<String>();
-		PredictionThread thread = new PredictionThread(this,database);
-
 	}
 	
 	public void initialize() {
+		if(thread == null) {
+		thread = new PredictionThread(this,database);
 		thread.start();
+		}
 	}
 	
 	@FXML
