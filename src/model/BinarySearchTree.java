@@ -195,7 +195,6 @@ public class BinarySearchTree<K extends Comparable<K>,E> implements IBinarySearc
 				return true;
 			}
 		}else {
-			System.out.println();
 			Node<K,E> temp =minRightValue;
 			deleteTreeNoSons(minRightValue);
 			if(current==this.root) {

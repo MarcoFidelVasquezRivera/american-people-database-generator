@@ -104,6 +104,8 @@ public class UpdateOrDeleteController {
 	@FXML
 	void deleteData(ActionEvent event) {
 		database.delete(person.getCode(), person.getName(), person.getLastName());
+		Alert a = new Alert(AlertType.CONFIRMATION, "Person deleted successfully");
+		a.show();
 	}
 
 
