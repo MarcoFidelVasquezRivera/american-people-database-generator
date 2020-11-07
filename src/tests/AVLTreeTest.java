@@ -206,9 +206,12 @@ class AVLTreeTest {
 		number = root.getRight().getElement();
 		assertTrue(number==80,"The delete method is not doing the rotations in the correct way");
 		
+		
 		number = root.getLeft().getElement();
 		assertTrue(number==20,"The delete method is not doing the rotations in the correct way");
 		assertTrue(root.getHeight()==2,"the height is not updaten when a rotation is done");
+		assertTrue(root.getRight().getParent() == root);
+		assertTrue(root.getLeft().getParent() == root);
 	}
 	
 	
@@ -243,6 +246,12 @@ class AVLTreeTest {
 		number = root.getLeft().getLeft().getElement();
 		assertTrue(number==20,"The delete method is not doing the rotations in the correct way");
 		assertTrue(root.getHeight()==2,"the height is not updaten when a rotation is done");
+		
+		assertTrue(root.getLeft().getParent() == root && root.getRight().getParent() == root);
+		assertTrue(root.getLeft().getLeft().getParent() == root.getLeft() && root.getLeft().getRight().getParent() == root.getLeft());
+		assertTrue(root.getRight().getLeft().getParent() == root.getRight() && root.getRight().getRight().getParent() == root.getRight());
+		
+		
 	}
 	
 	@Test
@@ -273,6 +282,12 @@ class AVLTreeTest {
 		assertTrue(number==30,"The delete method is not doing the rotations in the correct way");
 		
 		assertTrue(root.getHeight()==2,"the height is not updaten when a rotation is done");
+		
+		assertTrue(root.getRight().getRight().getParent() == root.getRight());
+		assertTrue(root.getLeft().getLeft().getParent() == root.getLeft() && root.getLeft().getRight().getParent() == root.getLeft()); 
+		
+		assertTrue(root.getRight().getParent() == root && root.getLeft().getParent() == root);
+	
 	}
 	
 	@Test
@@ -303,5 +318,11 @@ class AVLTreeTest {
 		assertTrue(number==10,"The delete method is not doing the rotations in the correct way");
 		
 		assertTrue(root.getHeight()==2,"the height is not updaten when a rotation is done");
+		
+		
+		assertTrue(root.getRight().getRight().getParent() == root.getRight() && root.getRight().getLeft().getParent() == root.getRight());
+		assertTrue(root.getLeft().getLeft().getParent() == root.getLeft()); 
+		
+		assertTrue(root.getRight().getParent() == root && root.getLeft().getParent() == root);
 	}
 }

@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.imageio.ImageIO;
+
+import customExceptions.ElementAlreadyExistException;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -48,16 +52,11 @@ public class UpdateOrDeleteController {
 	private ImageView photoo;
 
 	@FXML
-	private TextField textImg;
-
-	@FXML
 	private TextField textAge;
 
 	@FXML
 	private Label textCode;
 
-	@FXML
-	private TextField textImgg;
 
 	public UpdateOrDeleteController(MenuController mc, Database database, Person person) {
 		this.mc = mc;
@@ -73,6 +72,7 @@ public class UpdateOrDeleteController {
 	}
 	
 	public void initPerson() {
+		textCode.setText(String.valueOf(person.getCode()));
 		textName.setText(person.getName());
 		textLastName.setText(person.getLastName());
 		textGender.setText(person.getGender());
@@ -84,19 +84,26 @@ public class UpdateOrDeleteController {
 
 	@FXML // eliminarlo y volverlo a insertar con la nueva info
 	void updateData(ActionEvent event) {
-		long codeN = person.getCode();
-		String nameN = person.getName();
-		String LastNameN = person.getLastName(); //code, age, name, lastName, gender, date, height, nationality, photography
-	//	Person n = new Person(Integer.parseInt(textCode.getText()), Integer.parseInt(textAge.getText()), textName.getText(), textLastName.getText(), textGender.getText(), textDate.getText(), Double.parseDouble(textHeight.getText()), textNationality.getText(), textImgg.getText());
-	//	mc.getDatabase().eliminar(codeN); //aqui se elimina de los arboles
-	//	mc.getDatabase().insertar(n); //aqui se inserta el "person"	
+		try {
+		database.delete(person.getCode(), person.getName(), person.getLastName());
+		Long a = Long.parseLong(textCode.getText());
+		Integer b = Integer.parseInt(textAge.getText());
+		Integer c = Integer.parseInt(textHeight.getText());
+		database.addPerson(textName.getText(), textLastName.getText(), a, textGender.getText(), b, c, textDate.getText(), textNationality.getText(), textName.getText() + " " + textLastName.getText());
+		}catch(NumberFormatException e) {
+			Alert za = new Alert(AlertType.ERROR, "Invalid inputs");
+			za.show();
+		} catch (ElementAlreadyExistException e) {
+			Alert s = new Alert(AlertType.ERROR, "Element already exists in database");
+			s.show();
+		}
+		
 		initializeImageView();
 	}
 
 	@FXML
 	void deleteData(ActionEvent event) {
-		// eliminar persona marco
-		// mc.getDatabase().eliminar(codeN); aqui se elimina de los arboles
+		database.delete(person.getCode(), person.getName(), person.getLastName());
 	}
 
 

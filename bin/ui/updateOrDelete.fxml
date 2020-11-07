@@ -44,11 +44,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="31.0" layoutY="344.0" text="Photography">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <TextField fx:id="textName" layoutX="133.0" layoutY="53.0" />
       <TextField fx:id="textLastName" layoutX="133.0" layoutY="93.0" />
       <TextField fx:id="textGender" layoutX="133.0" layoutY="176.0" />
@@ -67,7 +62,6 @@
          </font>
       </Button>
       <Label fx:id="textCode" layoutX="133.0" layoutY="21.0" />
-      <TextField fx:id="textImgg" layoutX="133.0" layoutY="341.0" promptText="image path " />
       <Label layoutX="41.0" layoutY="135.0" text="Age" />
       <TextField fx:id="textAge" layoutX="133.0" layoutY="131.0" />
    </children>
