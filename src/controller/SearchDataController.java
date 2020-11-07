@@ -28,6 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Database;
 import model.Person;
+import threads.PredictionThread;
 
 public class SearchDataController {
 	private MenuController mc;
@@ -52,6 +53,8 @@ public class SearchDataController {
 
 	@FXML
 	private ComboBox<String> predict;
+	
+	private PredictionThread thread;
 
 	public SearchDataController(MenuController mc, Database database) {
 		searchData = new Stage();
@@ -65,42 +68,22 @@ public class SearchDataController {
 		alert = false;
 		listaB = new ArrayList<>();
 		predict = new ComboBox<String>();
+		PredictionThread thread = new PredictionThread(this,database);
+
+	}
+	
+	public void initialize() {
+		thread.start();
 	}
 	
 	@FXML
 	void  searchPredict(KeyEvent event) {
-		String line = textSearch.getText();
 
-		if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("code")) { // 1 code 2 nombre 3 apellido 4 full name
-			listaB = mc.getDatabase().searchList(line, 1);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("name")) {
-			listaB = mc.getDatabase().searchList(line, 2);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("last name")) {
-			listaB = mc.getDatabase().searchList(line, 3);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("full name")) {
-			listaB = mc.getDatabase().searchList(line, 4);
-		} else if (textSearch.getText().isEmpty() && alert == false) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setHeaderText(null);
-			alert.setContentText("User has not selected search filter");
-			textSearch.setText("");
-		}
 		
-		if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("code")) { // 1 code 2 nombre 3 apellido 4 full name
-			initload(listaB,1);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("name")) {
-			initload(listaB,2);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("last name")) {
-			initload(listaB,3);
-		} else if (((RadioButton) mode.getSelectedToggle()).getText().equalsIgnoreCase("full name")) {
-			initload(listaB,4);
-		}
-		
-		numberMatches.setText(listaB.size() + "");
 	}
 	
-	private void initload(ArrayList<Person> listaB2, int mode) {
-
+	public void initload(ArrayList<Person> listaB2, int mode) {
+		predict.getItems().clear();
 		switch(mode) {
 		case 1: 
 			for (int i = 0; i < 30 && i < listaB2.size(); i++) {
@@ -177,12 +160,15 @@ public class SearchDataController {
 		lastNameA = true;
 		alert = true;
 	}
-
+	
+	public String getTSearchedText() {
+		return textSearch.getText();
+	}
+	
 	public String getSelectedToggle() {
-		if((((RadioButton) mode.getSelectedToggle()).getText() == null)){
-			Alert a = new Alert(AlertType.ERROR, "There is not a selected mode");
-			a.show();
-			return null;
+		if( mode.getSelectedToggle() == null){
+
+			return "";
 		}else return (((RadioButton) mode.getSelectedToggle()).getText());
 	}
 }

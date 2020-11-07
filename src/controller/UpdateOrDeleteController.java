@@ -67,7 +67,10 @@ public class UpdateOrDeleteController {
 		initializeImageView();
 	}
 	
-
+	public void initialize() {
+		initializeImageView();
+	}
+	
 	public void initPerson() {
 		textName.setPromptText(person.getName());
 		textLastName.setPromptText(person.getLastName());
